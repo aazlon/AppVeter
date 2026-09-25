@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todas las Notificaciones | Pets Products 2022 C.A</title>
+    <meta name="description" content="Todas tus notificaciones en Pets Products 2022 C.A">
+
+
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/AllNotifications.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+
+ 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+  
+    <div id="navbar-root"></div>
+
+
+    <main class="main-container">
+  
+        <header class="module-header">
+            <div class="header-content">
+                <span class="module-tag">Notificaciones</span>
+                <h1 class="module-title">Todas las Notificaciones</h1>
+                <p class="module-subtitle">Revisa todas tus notificaciones del sistema.</p>
+            </div>
+        </header>
+
+      
+        <section class="actions-section">
+            <div class="actions-card">
+                <div class="actions-header">
+                    <h3><i class="fas fa-cog"></i> Acciones</h3>
+                </div>
+                <div class="actions-grid">
+                    <button class="action-btn-secondary" id="mark-all-read-btn">
+                        <i class="fas fa-check-double"></i> Marcar todas como leídas
+                    </button>
+                    <button class="action-btn-secondary" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+        </section>
+
+       
+        <section class="notifications-section">
+            <div class="notifications-card">
+                <div class="notifications-header">
+                    <h3><i class="fas fa-list"></i> Listado de Notificaciones</h3>
+                    <span class="notifications-counter" id="notifications-counter">Cargando...</span>
+                </div>
+
+                <div class="notifications-list" id="notifications-list">
+                    <div class="loading-notifications">
+                        <div class="spinner"></div> Cargando notificaciones...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   
+    <div id="footer-root"></div>
+
+    <div class="delete-confirm-modal" id="deleteConfirmModal">
+        <div class="delete-confirm-content">
+            <div class="delete-confirm-icon">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <p class="delete-confirm-message" id="deleteConfirmMessage">¿Esta seguro(a) de eliminar esta notificación?</p>
+            <div class="delete-confirm-actions">
+                <button type="button" class="btn-confirm-no" id="btnConfirmNo">No</button>
+                <button type="button" class="btn-confirm-yes" id="btnConfirmYes">Sí</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/AllNotifications.js" type="module"></script>
+</body>
+
+</html>

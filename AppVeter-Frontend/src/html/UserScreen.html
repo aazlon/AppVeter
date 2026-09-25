@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Pets Products 2022 C.A</title>
+    <meta name="description"
+        content="Bienvenido a tu panel de usuario de Pets Products 2022 C.A. Gestiona tus citas y servicios.">
+
+    
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/UserScreen.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+    
+    <div id="navbar-root"></div>
+
+    <section class="hero" id="hero-welcome" style="background-image: url('../assets/veter2.webp');">
+        <div class="hero-content">
+            <span class="hero-tag">¡Bienvenido a tu Panel de Usuario!</span>
+            <h1 class="hero-title">¡Hola, <span id="welcome-name">Usuario</span>!</h1>
+            <p class="hero-description">
+                Estamos felices de verte de nuevo en Pets Products 2022 C.A.
+                Agenda tus citas y servicios de manera rápida y sencilla.
+            </p>
+        </div>
+    </section>
+
+    
+    <main class="dashboard-container">
+
+        <section class="question-section">
+            <h2 class="question-title">¿Qué desea hacer hoy?</h2>
+            <div class="question-underline"></div>
+        </section>
+
+<section class="actions-section">
+            <div class="actions-grid">
+               
+                <div class="action-card" id="card-appointment">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Agendar cita</h3>
+                        <p>Reserva un espacio con nuestros especialistas para el cuidado de tu mejor amigo.</p>
+                    </div>
+                </div>
+
+               
+                <div class="action-card" id="card-services">
+                    <div class="card-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Servicios disponibles</h3>
+                        <p>Explora todos los tratamientos y servicios de estética que ofrecemos para tus mascotas.</p>
+                    </div>
+                </div>
+
+                 
+                <div class="action-card admin-card" id="card-recepcionistas" style="display: none;">
+                    <div class="card-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Usuarios Recepcionistas</h3>
+                        <p>Elimina los usuarios recepcionistas de la clínica que ya no formen parte del equipo para dar lugar a nuevos miembros y evitar accesos no autorizados.</p>
+                    </div>
+                </div>
+
+                <div class="action-card admin-card" id="card-veterinarios" style="display: none;">
+                    <div class="card-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Usuarios Veterinarios</h3>
+                        <p>Elimina los usuarios veterinarios de la clínica que ya no formen parte del equipo para dar lugar a nuevos miembros y evitar accesos no autorizados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+    <div id="footer-root"></div>
+
+    
+    <script src="../js/UserScreen.js" type="module"></script>
+</body>
+
+</html>

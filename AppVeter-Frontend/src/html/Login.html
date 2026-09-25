@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión | Pets Products 2022 C.A</title>
+
+    
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/Index.css">
+    <link rel="stylesheet" href="../css/Login.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+    
+    <nav class="navbar" id="main-navbar">
+        <div class="nav-left">
+            <div class="logo-container">
+                <span class="logo-text">Pets Products 2022 C.A</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn" id="btn-inicio">Inicio</button>
+                <button class="nav-btn" id="btn-novedades">Novedades</button>
+                <button class="nav-btn" id="btn-acerca">Acerca de</button>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="#" class="auth-btn btn-login active">Iniciar sesión</a>
+            <a href="../html/Register.html" class="auth-btn btn-register">Regístrate</a>
+        </div>
+    </nav>
+
+   
+    <main class="login-main">
+        <div class="login-container">
+            <div class="login-left">
+                <!-- Image or visual for login -->
+                <div class="login-hero">
+                    <h2>Bienvenido de nuevo</h2>
+                    <p>Accede a tu cuenta para programar citas, estar al tanto de nuestras novedades y descubrir los
+                        servicios que ofrecemos para el cuidado de tus mascotas.</p>
+                </div>
+            </div>
+
+            <div class="login-right">
+                <form id="loginForm" class="login-form">
+                    <h2 class="form-title">Iniciar Sesión</h2>
+
+                    <div class="form-group">
+                        <i class="fas fa-user-circle input-icon"></i>
+                        <input type="text" id="username_or_email" name="username_or_email"
+                            placeholder="Usuario o Correo" autocomplete="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" name="password" placeholder="Contraseña" autocomplete="current-password" required>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#" id="recoverPassword">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <button type="submit" id="btnSubmit" class="btn-submit">
+                        <span class="btn-text">Ingresar</span>
+                        <div class="loader" id="submitLoader"></div>
+                    </button>
+
+                    <div class="register-link">
+                        <p>¿No tienes una cuenta? <a href="Register.html">Regístrate</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    
+    <div id="footer-root"></div>
+
+    
+    <script src="../js/Login.js" type="module"></script>
+</body>
+
+</html>

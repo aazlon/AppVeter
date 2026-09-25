@@ -1,0 +1,176 @@
+.detail-section {
+    margin-bottom: 20px;
+}
+
+.detail-section h4 {
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.detail-item {
+    margin-bottom: 10px;
+}
+
+.detail-item strong {
+    color: #555;
+    display: inline-block;
+    width: 150px;
+}
+
+.detail-item span {
+    color: #333;
+}
+
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pendiente {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-aprobada {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-rechazada {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.btn-approve {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+}
+
+.detail-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.detail-action-btn:hover:not(:disabled) {
+    filter: brightness(0.9);
+}
+
+#detail-reject-btn {
+    margin-right: auto;
+}
+
+.confirm-modal-content {
+    max-width: 480px;
+    width: 90%;
+}
+
+.confirm-action-indicator {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    margin-bottom: 20px;
+    border: 2px solid #e9ecef;
+}
+
+.confirm-icon {
+    flex-shrink: 0;
+}
+
+.confirm-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.5;
+}
+
+.confirm-text strong {
+    font-size: 18px;
+}
+
+.confirm-date-section {
+    margin-bottom: 16px;
+}
+
+.confirm-date-section label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.confirm-date-section input[type="date"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Outfit', sans-serif;
+    transition: border-color 0.2s ease;
+}
+
+.confirm-date-section input[type="date"]:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.confirm-info-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 12px;
+    padding: 12px;
+    background-color: #f0f7ff;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-success:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-danger {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #5a6268;
+}

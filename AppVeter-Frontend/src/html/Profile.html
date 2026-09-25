@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil | Pets Products 2022 C.A</title>
+
+  
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/UserScreen.css">
+    <link rel="stylesheet" href="../css/Profile.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+    <link rel="stylesheet" href="../css/SuccessModal.css">
+
+   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+   
+    <div id="navbar-root"></div>
+
+   
+    <main class="profile-main">
+        <div class="profile-container">
+            <div class="profile-left">
+                <div class="profile-hero">
+                    <h2>Mi Perfil</h2>
+                    <p>Revisa y actualiza tus datos personales. Los campos de nombre, apellido, correo y cédula no se pueden modificar.</p>
+                </div>
+            </div>
+
+            <div class="profile-right">
+                <form id="profileForm" class="profile-form">
+                    <h2 class="form-title">Editar Perfil</h2>
+
+                    <div class="image-upload-container">
+                        <label for="imageInput" class="image-upload-label">
+                            <img id="imagePreview" src="../assets/cliente.jpg" alt="Vista previa de perfil"
+                                class="profile-preview">
+                            <div class="image-overlay">
+                                <i class="fas fa-camera"></i>
+                                <span>Cambiar foto</span>
+                            </div>
+                        </label>
+                        <input type="file" id="imageInput" name="image" accept="image/*" hidden>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="name" name="name" placeholder="Nombre" readonly>
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-user-tag input-icon"></i>
+                            <input type="text" id="lastname" name="lastname" placeholder="Apellido" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-user-circle input-icon"></i>
+                        <input type="text" id="username" name="username" placeholder="Usuario" required>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="email" name="email" placeholder="Correo electrónico" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-id-card input-icon"></i>
+                        <input type="text" id="cedula" name="cedula" placeholder="Cédula" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
+                    </div>
+
+                    <div id="errorMessage" class="error-message"></div>
+
+                    <button type="submit" id="btnSubmit" class="btn-submit">
+                        <span class="btn-text">Guardar Cambios</span>
+                        <div class="loader" id="submitLoader"></div>
+                    </button>
+
+                    <button type="button" id="btnDeleteAccount" class="btn-delete-account" hidden>
+                        Eliminar cuenta
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+   
+    <div id="footer-root"></div>
+
+    <div class="delete-confirm-modal" id="deleteConfirmModal">
+        <div class="delete-confirm-content">
+            <div class="delete-confirm-icon">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <p class="delete-confirm-message">¿Esta seguro(a) de eliminar su cuenta?</p>
+            <div class="delete-confirm-actions">
+                <button type="button" class="btn-confirm-no" id="btnConfirmNo">No</button>
+                <button type="button" class="btn-confirm-yes" id="btnConfirmYes">Sí</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <p class="success-modal-message" id="successModalMessage">Cuenta eliminada satisfactoriamente</p>
+        </div>
+    </div>
+
+    <script src="../js/Profile.js" type="module"></script>
+</body>
+
+</html>

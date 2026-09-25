@@ -1,0 +1,413 @@
+
+@import url('./RegisterClient.css');
+
+
+.actions-section {
+    padding: 20px;
+}
+
+.notifications-section {
+    padding: 20px;
+}
+
+.actions-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.actions-header {
+    margin-bottom: 15px;
+}
+
+.actions-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.actions-grid {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.action-btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.action-btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.notifications-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.notifications-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 18px;
+}
+
+.notifications-counter {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.notifications-list {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #f0f7ff;
+    border-left: 4px solid #3498db;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    font-size: 26px;
+    color: #3498db;
+    margin-top: 3px;
+    min-width: 56px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.notification-icon .notification-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3498db;
+    display: block;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 16px;
+}
+
+.notification-message {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.notification-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.notification-type-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.type-cita {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.loading-notifications {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.no-notifications {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+}
+
+.no-notifications i {
+    font-size: 50px;
+    margin-bottom: 15px;
+    color: #ddd;
+}
+
+.no-notifications p {
+    font-size: 16px;
+    margin: 0;
+}
+
+
+.notification-delete-btn {
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    flex-shrink: 0;
+    align-self: center;
+}
+
+.notification-item:hover .notification-delete-btn {
+    opacity: 1;
+}
+
+.notification-delete-btn:hover {
+    background-color: #fce4ec;
+    transform: scale(1.15);
+}
+
+
+.notifications-list .notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.notifications-list .notification-content {
+    cursor: pointer;
+}
+
+
+.nav-icon-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 50%;
+    position: relative;
+}
+
+.nav-icon-btn:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    transform: rotate(15deg);
+}
+
+.nav-icon-img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e74c3c;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.notification-badge.show {
+    opacity: 1;
+}
+
+.notification-badge.hidden {
+    opacity: 0;
+}
+
+
+.delete-confirm-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 3000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.delete-confirm-modal.active {
+    display: flex;
+}
+
+.delete-confirm-content {
+    background: var(--white, #ffffff);
+    border-radius: 24px;
+    padding: 2.5rem 3rem;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    animation: deleteConfirmPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.delete-confirm-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4), inset 0 0 0 6px rgba(255, 255, 255, 0.25);
+}
+
+.delete-confirm-icon i {
+    font-size: 2.2rem;
+    color: var(--white, #ffffff);
+}
+
+.delete-confirm-message {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-dark, #1e3f6b);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.btn-confirm-no,
+.btn-confirm-yes {
+    flex: 1;
+    padding: 0.85rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform var(--transition-speed, 0.3s), box-shadow var(--transition-speed, 0.3s), background var(--transition-speed, 0.3s);
+}
+
+.btn-confirm-no {
+    background: var(--gray-light, #f4f4f4);
+    color: var(--gray-dark, #333333);
+}
+
+.btn-confirm-no:hover {
+    background: #e6e6e6;
+    transform: translateY(-2px);
+}
+
+.btn-confirm-yes {
+    background: #e74c3c;
+    color: var(--white, #ffffff);
+}
+
+.btn-confirm-yes:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+}
+
+.btn-confirm-no:active,
+.btn-confirm-yes:active {
+    transform: translateY(0);
+}
+
+.btn-confirm-yes:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@keyframes deleteConfirmPopIn {
+    from {
+        opacity: 0;
+        transform: scale(0.6);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

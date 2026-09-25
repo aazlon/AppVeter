@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Citas | Pets Products 2022 C.A</title>
+    <meta name="description" content="Gestiona las citas médicas veterinarias en Pets Products 2022 C.A">
+
+    
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/GestionarCitas.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+    <link rel="stylesheet" href="../css/SuccessModal.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+   
+    <div id="navbar-root"></div>
+
+   
+    <main class="main-container">
+        <header class="module-header">
+            <div class="header-content">
+                <span class="module-tag">Administración / Citas</span>
+                <h1 class="module-title">Gestión de Citas Médicas</h1>
+                <p class="module-subtitle">Revisa, aprueba o rechaza las solicitudes de citas de los clientes.</p>
+            </div>
+        </header>
+
+        <section class="filters-section">
+            <div class="filters-card">
+                <div class="filters-header">
+                    <h3><i class="fas fa-sliders-h"></i> Filtros</h3>
+                    <button class="refresh-btn" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+                <div class="filters-grid">
+                    <div class="form-group">
+                        <label for="filter-estado">Estado</label>
+                        <select id="filter-estado">
+                            <option value="">Todos los estados</option>
+                            <option value="PENDIENTE" selected>Pendientes</option>
+                            <option value="APROBADA">Aprobadas</option>
+                            <option value="RECHAZADA">Rechazadas</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="citas-section">
+            <div class="citas-card">
+                <div class="citas-header">
+                    <h3><i class="fas fa-list-alt"></i> Listado de Citas</h3>
+                    <span class="citas-counter" id="citas-counter">Cargando...</span>
+                </div>
+
+                <div class="table-container">
+                    <table class="citas-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha Solicitud</th>
+                                <th>Propietario</th>
+                                <th>C.I.</th>
+                                <th>Teléfono</th>
+                                <th>Motivo</th>
+                                <th>Fecha Cita</th>
+                                <th>Estado</th>
+                                <th class="actions-col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="citas-tbody">
+                            <tr>
+                                <td colspan="8" class="loading-td">
+                                    <div class="spinner"></div> Cargando citas...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   
+    <div class="modal" id="detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-info-circle"></i> Detalle de la Cita</h2>
+                <button class="close-modal-btn" id="close-detail-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="detail-modal-body">
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-approve detail-action-btn" id="detail-approve-btn">
+                    <i class="fas fa-check"></i> Aprobar
+                </button>
+                <button class="modal-btn btn-reject detail-action-btn" id="detail-reject-btn">
+                    <i class="fas fa-times"></i> Rechazar
+                </button>
+                <button class="modal-btn btn-secondary" id="modal-close-action">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content confirm-modal-content">
+            <div class="modal-header" id="confirm-modal-header">
+                <h2 id="confirm-modal-title"><i class="fas fa-check-circle"></i> Confirmar Acción</h2>
+                <button class="close-modal-btn" id="close-confirm-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="confirm-modal-body">
+                <div class="confirm-action-indicator" id="confirm-action-indicator">
+                    <div class="confirm-icon" id="confirm-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="confirm-text" id="confirm-text">
+                        <strong id="confirm-action-label">APROBAR</strong> cita de <span id="confirm-propietario">---</span>
+                    </div>
+                </div>
+                <div class="confirm-date-section" id="confirm-date-section">
+                    <label for="confirm-fecha-cita">Fecha de la Cita *</label>
+                    <input type="date" id="confirm-fecha-cita" name="confirm-fecha-cita">
+                </div>
+                <p class="confirm-info-text" id="confirm-info-text">¿Está seguro de realizar esta acción?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-danger" id="cancel-confirm-btn">Cancelar</button>
+                <button class="modal-btn btn-success" id="execute-confirm-btn">
+                    <i class="fas fa-check"></i> Confirmar
+                </button>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="modal" id="edit-date-modal">
+        <div class="modal-content edit-date-modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> Editar Fecha de la Cita</h2>
+                <button class="close-modal-btn" id="close-edit-date-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="edit-date-info">
+                    <strong>Propietario:</strong> <span id="edit-date-propietario">---</span>
+                </div>
+                <div class="edit-date-info">
+                    <strong>Estado:</strong> <span id="edit-date-estado">---</span>
+                </div>
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label for="edit-date-input">Fecha de la Cita *</label>
+                    <input type="date" id="edit-date-input" name="edit-date-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-secondary" id="cancel-edit-date-btn">Cancelar</button>
+                <button class="modal-btn btn-primary" id="save-edit-date-btn">
+                    <i class="fas fa-save"></i> Guardar Fecha
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="footer-root"></div>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <p class="success-modal-message" id="successModalMessage">La cita se ha actualizado correctamente</p>
+        </div>
+    </div>
+
+    
+    <script src="../js/GestionarCitas.js" type="module"></script>
+</body>
+
+</html>

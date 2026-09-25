@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita | Pets Products 2022 C.A</title>
+    <meta name="description" content="Agenda tu cita médica veterinaria en Pets Products 2022 C.A">
+
+
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/Agendar.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+    <link rel="stylesheet" href="../css/SuccessModal.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+
+    <div id="navbar-root"></div>
+
+
+    <main class="main-container">
+
+        <header class="module-header">
+            <div class="header-content">
+                <span class="module-tag">Servicios / Citas</span>
+                <h1 class="module-title">Agendar Cita Médica</h1>
+                <p class="module-subtitle">Completa el formulario para solicitar una cita para tu mascota.</p>
+            </div>
+        </header>
+
+
+        <section class="form-section">
+            <form id="citaForm" class="cita-form">
+                
+
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-user"></i></div>
+                        <h2>Datos del Propietario</h2>
+                    </div>
+                    <div class="card-body grid-2">
+                        <div class="form-group">
+                            <label for="nombre_propietario">Nombre Completo del Propietario *</label>
+                            <input type="text" id="nombre_propietario" name="nombre_propietario" required placeholder="Ej. Milagro Casta">
+                        </div>
+                        <div class="form-group">
+                            <label for="ci">Cédula de Identidad (C.I.) *</label>
+                            <input type="text" id="ci" name="ci" required placeholder="Ej. 16951526">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Número de Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" required placeholder="Ej. 04241415511">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo_electronico">Correo Electrónico *</label>
+                            <input type="email" id="correo_electronico" name="correo_electronico" required placeholder="Ej. cliente@email.com">
+                        </div>
+                        <div class="form-group span-2">
+                            <label for="direccion">Dirección de Habitación *</label>
+                            <textarea id="direccion" name="direccion" required placeholder="Ej. LLANO ALTO"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-calendar-check"></i></div>
+                        <h2>Motivo de la Cita</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group span-full">
+                            <label for="motivo_cita">Describe el motivo de tu cita *</label>
+                            <textarea id="motivo_cita" name="motivo_cita" required placeholder="Ej. Consulta general, vacunación, revisión de herida, etc." rows="4"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="submit-cita-btn">
+                        <i class="fas fa-paper-plane"></i> Enviar Solicitud de Cita
+                    </button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+
+    <div id="footer-root"></div>
+
+
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <p class="success-modal-message" id="successModalMessage">Solicitud enviada correctamente</p>
+        </div>
+    </div>
+
+    <script src="../js/Agendar.js" type="module"></script>
+</body>
+
+</html>

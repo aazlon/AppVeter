@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios | Pets Products 2022 C.A</title>
+    <meta name="description" content="Explora los servicios de Pets Products 2022 C.A.">
+
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/UserScreen.css">
+    <link rel="stylesheet" href="../css/Services.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+    <div id="navbar-root"></div>
+
+    <main class="services-container">
+        <section class="services-header">
+            <h1 class="services-title" id="services-title">Servicios disponibles</h1>
+            <div class="services-underline"></div>
+        </section>
+
+        <section class="admin-form-section" id="admin-form-section" style="display: none;">
+            <div class="form-card">
+                <h2 class="form-title" id="form-title"><i class="fas fa-plus-circle"></i> Nuevo servicio</h2>
+                <form id="service-form">
+                    <input type="hidden" id="service-id" value="">
+
+                    <div class="form-group">
+                        <label for="service-image"><i class="fas fa-image"></i> Imagen del servicio</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="service-image" accept="image/*">
+                            <div class="file-input-placeholder" id="file-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Seleccionar imagen</span>
+                            </div>
+                        </div>
+                        <div class="image-preview" id="image-preview" style="display: none;">
+                            <img id="preview-img" src="" alt="Vista previa">
+                            <button type="button" class="remove-image-btn" id="remove-image"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service-title"><i class="fas fa-heading"></i> Título</label>
+                        <input type="text" id="service-title" placeholder="Ej: Consulta General" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service-desc"><i class="fas fa-align-left"></i> Descripción</label>
+                        <textarea id="service-desc" rows="4" placeholder="Describe el servicio..." required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-cancel" id="btn-cancel-form" style="display: none;">Cancelar</button>
+                        <button type="submit" class="btn-submit" id="btn-submit-form">
+                            <i class="fas fa-save"></i> <span id="btn-submit-text">Publicar servicio</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="services-grid-section">
+            <div class="services-grid" id="services-grid">
+                <div class="loading-services">
+                    <div class="spinner"></div> Cargando servicios...
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="no-services-message" id="no-services" style="display: none;">
+        <i class="fas fa-paw"></i>
+        <p>No hay servicios disponibles aún.</p>
+    </div>
+
+   
+    <div id="footer-root"></div>
+
+    <script src="../js/Services.js" type="module"></script>
+</body>
+
+</html>

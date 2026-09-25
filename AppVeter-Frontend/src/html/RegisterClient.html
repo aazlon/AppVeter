@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro y Control de Clientes | Pets Products 2022 C.A</title>
+    <meta name="description" content="Módulo de Registro de Clientes y Mascotas para Secretaría. Control e historias clínicas.">
+
+    
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/RegisterClient.css">
+    <link rel="stylesheet" href="../css/NotificationModal.css">
+    <link rel="stylesheet" href="../css/SuccessModal.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+</head>
+
+<body>
+
+    
+    <div id="navbar-root"></div>
+
+  
+    <main class="main-container">
+        
+        <header class="module-header">
+            <div class="header-content">
+                <span class="module-tag">Área Administrativa / Recepción</span>
+                <h1 class="module-title">Módulo de Clientes y Mascotas</h1>
+                <p class="module-subtitle">Crea, edita, busca y administra los registros de clientes, mascotas e historias clínicas generales.</p>
+            </div>
+        </header>
+
+       
+        <div class="tabs-nav">
+            <button class="tab-trigger active" data-tab="tab-register" id="tab-register-btn">
+                <i class="fas fa-plus-circle"></i> Registrar Nueva Historia
+            </button>
+            <button class="tab-trigger" data-tab="tab-manage" id="tab-manage-btn">
+                <i class="fas fa-search"></i> Buscar y Gestionar Historias
+            </button>
+        </div>
+
+       
+        <div class="editing-banner" id="editing-banner">
+            <div class="banner-content">
+                <i class="fas fa-edit"></i>
+                <span>Modo Edición Activo: Modificando historia de <strong id="editing-pet-name">Mascota</strong></span>
+            </div>
+            <button class="cancel-edit-btn" id="cancel-edit-btn">Cancelar Edición</button>
+        </div>
+
+       
+        <section class="tab-content active" id="tab-register">
+            <form id="historyForm" class="history-form">
+                
+               
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-user"></i></div>
+                        <h2>Datos del Propietario</h2>
+                    </div>
+                    <div class="card-body grid-2">
+                        <div class="form-group">
+                            <label for="nombre_propietario">Nombre Completo del Propietario *</label>
+                            <input type="text" id="nombre_propietario" name="nombre_propietario" required placeholder="Ej. Milagro Casta">
+                        </div>
+                        <div class="form-group">
+                            <label for="ci">Cédula de Identidad (C.I.) *</label>
+                            <input type="text" id="ci" name="ci" required placeholder="Ej. 16951526">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Número de Teléfono *</label>
+                            <input type="tel" id="telefono" name="telefono" required placeholder="Ej. 04241415511">
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha">Fecha de Registro *</label>
+                            <input type="date" id="fecha" name="fecha" required>
+                        </div>
+                        <div class="form-group span-2">
+                            <label for="direccion">Dirección de Habitación *</label>
+                            <textarea id="direccion" name="direccion" required placeholder="Ej. LLANO ALTO"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-paw"></i></div>
+                        <h2>Datos de la Mascota</h2>
+                    </div>
+                    <div class="card-body grid-3">
+                        <div class="form-group">
+                            <label for="nombre_mascota">Nombre de la Mascota *</label>
+                            <input type="text" id="nombre_mascota" name="nombre_mascota" required placeholder="Ej. Toto">
+                        </div>
+                        <div class="form-group">
+                            <label for="especie">Especie *</label>
+                            <select id="especie" name="especie" required>
+                                <option value="" disabled selected>Seleccione especie</option>
+                                <option value="CAN">Canino (Perro)</option>
+                                <option value="FEL">Felino (Gato)</option>
+                                <option value="AVE">Ave</option>
+                                <option value="EXO">Exótico / Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="raza">Raza *</label>
+                            <input type="text" id="raza" name="raza" required placeholder="Ej. Schnauzer">
+                        </div>
+                        <div class="form-group">
+                            <label for="edad">Edad *</label>
+                            <input type="text" id="edad" name="edad" required placeholder="Ej. 12 AÑOS o 6 MESES">
+                        </div>
+                        <div class="form-group">
+                            <label for="sexo">Sexo *</label>
+                            <select id="sexo" name="sexo" required>
+                                <option value="" disabled selected>Seleccione sexo</option>
+                                <option value="M">Macho (M)</option>
+                                <option value="H">Hembra (H)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="peso">Peso *</label>
+                            <input type="text" id="peso" name="peso" required placeholder="Ej. 6.5 Kg">
+                        </div>
+                        <div class="form-group">
+                            <label for="dieta">Dieta Habitual *</label>
+                            <input type="text" id="dieta" name="dieta" required placeholder="Ej. PERRARINA / PEDIGREE">
+                        </div>
+                        <div class="form-group">
+                            <label for="microchip">Código Microchip / Pedigree (Opcional)</label>
+                            <input type="text" id="microchip" name="microchip" placeholder="Ej. MC-981273">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor_nombre">Doctor que Atiende *</label>
+                            <input type="text" id="doctor_nombre" name="doctor_nombre" required placeholder="Ej. Dra. María González">
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-heartbeat"></i></div>
+                        <h2>Anamnesis / Estado de la Mascota</h2>
+                    </div>
+                    <div class="card-body grid-3">
+                        <div class="form-group">
+                            <label for="comportamiento">Comportamiento</label>
+                            <input type="text" id="comportamiento" name="comportamiento" placeholder="Ej. Dócil, Agresivo, Asustado">
+                        </div>
+                        <div class="form-group">
+                            <label for="apetito">Apetito</label>
+                            <input type="text" id="apetito" name="apetito" placeholder="Ej. Normal, Disminuido, Aumentado">
+                        </div>
+                        <div class="form-group">
+                            <label for="defecacion">Defecación</label>
+                            <input type="text" id="defecacion" name="defecacion" placeholder="Ej. Normal, Pastosa, Ausente">
+                        </div>
+                        <div class="form-group">
+                            <label for="diarrea">Diarrea</label>
+                            <input type="text" id="diarrea" name="diarrea" placeholder="Ej. No, Leve, Líquida con sangre">
+                        </div>
+                        <div class="form-group">
+                            <label for="prenez">Preñez</label>
+                            <input type="text" id="prenez" name="prenez" placeholder="Ej. No, 3 semanas, Desconocido">
+                        </div>
+                        <div class="form-group">
+                            <label for="cirugia">Cirugías Previas</label>
+                            <input type="text" id="cirugia" name="cirugia" placeholder="Ej. Esterilización hace 1 año">
+                        </div>
+                        <div class="form-group">
+                            <label for="inmunizaciones">Inmunizaciones (Vacunas)</label>
+                            <input type="text" id="inmunizaciones" name="inmunizaciones" placeholder="Ej. Al día, Pendiente rabia">
+                        </div>
+                        <div class="form-group">
+                            <label for="desparasitacion">Última Desparasitación</label>
+                            <input type="text" id="desparasitacion" name="desparasitacion" placeholder="Ej. Hace 2 meses (Pipeta)">
+                        </div>
+                        <div class="form-group">
+                            <label for="ingesta_agua">Ingesta de Agua</label>
+                            <input type="text" id="ingesta_agua" name="ingesta_agua" placeholder="Ej. Normal, Aumentada (Polidipsia)">
+                        </div>
+                        <div class="form-group">
+                            <label for="miccion">Micción</label>
+                            <input type="text" id="miccion" name="miccion" placeholder="Ej. Normal, Dificultosa (Disuria)">
+                        </div>
+                        <div class="form-group">
+                            <label for="vomitos">Vómitos</label>
+                            <input type="text" id="vomitos" name="vomitos" placeholder="Ej. No presenta, Frecuentes de bilis">
+                        </div>
+                        <div class="form-group">
+                            <label for="celos">Celos</label>
+                            <input type="text" id="celos" name="celos" placeholder="Ej. No presenta, Activo">
+                        </div>
+                        <div class="form-group">
+                            <label for="partos">Partos Anteriores</label>
+                            <input type="text" id="partos" name="partos" placeholder="Ej. Ninguno, 2 partos">
+                        </div>
+                    </div>
+                </div>
+
+             
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-stethoscope"></i></div>
+                        <h2>Examen Físico Inicial</h2>
+                    </div>
+                    <div class="card-body grid-3">
+                        <div class="form-group">
+                            <label for="temperatura">Temperatura (°C)</label>
+                            <input type="text" id="temperatura" name="temperatura" placeholder="Ej. 38.5 °C">
+                        </div>
+                        <div class="form-group">
+                            <label for="campo_pulmonar">Campo Pulmonar (Auscultar)</label>
+                            <input type="text" id="campo_pulmonar" name="campo_pulmonar" placeholder="Ej. Claro, Sin ruidos agregados">
+                        </div>
+                        <div class="form-group">
+                            <label for="tiempo_perfusion_capilar">Tiempo de Perfusión Capilar (TPC)</label>
+                            <input type="text" id="tiempo_perfusion_capilar" name="tiempo_perfusion_capilar" placeholder="Ej. 2 segundos">
+                        </div>
+                        <div class="form-group">
+                            <label for="membrana_mucosa">Membrana Mucosa</label>
+                            <input type="text" id="membrana_mucosa" name="membrana_mucosa" placeholder="Ej. Rosada, Húmeda, Pálida">
+                        </div>
+                        <div class="form-group">
+                            <label for="frecuencia_cardiaca">Frecuencia Cardíaca (FC)</label>
+                            <input type="text" id="frecuencia_cardiaca" name="frecuencia_cardiaca" placeholder="Ej. 110 lpm">
+                        </div>
+                        <div class="form-group">
+                            <label for="reflejo_deglutorio">Reflejo Deglutorio</label>
+                            <input type="text" id="reflejo_deglutorio" name="reflejo_deglutorio" placeholder="Ej. Presente, Positivo">
+                        </div>
+                        <div class="form-group">
+                            <label for="frecuencia_pulso">Frecuencia de Pulso</label>
+                            <input type="text" id="frecuencia_pulso" name="frecuencia_pulso" placeholder="Ej. Fuerte y concordante">
+                        </div>
+                        <div class="form-group">
+                            <label for="reflejo_tusigeno">Reflejo Tusígeno</label>
+                            <input type="text" id="reflejo_tusigeno" name="reflejo_tusigeno" placeholder="Ej. Negativo, Sin respuesta">
+                        </div>
+                        <div class="form-group">
+                            <label for="frecuencia_respiratoria">Frecuencia Respiratoria (FR)</label>
+                            <input type="text" id="frecuencia_respiratoria" name="frecuencia_respiratoria" placeholder="Ej. 24 rpm">
+                        </div>
+                        <div class="form-group">
+                            <label for="palpacion_abdominal">Palpación Abdominal</label>
+                            <input type="text" id="palpacion_abdominal" name="palpacion_abdominal" placeholder="Ej. Blanda, Indolora, Con gases">
+                        </div>
+                        <div class="form-group">
+                            <label for="nodulos_linfaticos">Nódulos Linfáticos</label>
+                            <input type="text" id="nodulos_linfaticos" name="nodulos_linfaticos" placeholder="Ej. Normales, Reactivos, Aumentados">
+                        </div>
+                        <div class="form-group span-3">
+                            <label for="antecedentes_clinicos">Antecedentes Clínicos Relevantes</label>
+                            <textarea id="antecedentes_clinicos" name="antecedentes_clinicos" placeholder="Ej. Alérgico a la penicilina, dermatitis previa..."></textarea>
+                        </div>
+                        <div class="form-group span-3">
+                            <label for="observaciones">Observaciones Generales</label>
+                            <textarea id="observaciones" name="observaciones" placeholder="Ej. El paciente se muestra cooperador durante la revisión."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+              
+                <div class="form-section-card">
+                    <div class="card-header">
+                        <div class="card-icon-circle"><i class="fas fa-file-medical-alt"></i></div>
+                        <h2>Exámenes Paraclínicos y Diagnóstico</h2>
+                    </div>
+                    <div class="card-body grid-2">
+                        <div class="form-group span-2">
+                            <label class="checkbox-group-title">Exámenes Paraclínicos Requeridos o Realizados</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="perfil_quimico" name="perfil_quimico">
+                                    <span class="checkmark"></span>
+                                    Perfil Químico
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="hematologia" name="hematologia">
+                                    <span class="checkmark"></span>
+                                    Hematología
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="coprologia" name="coprologia">
+                                    <span class="checkmark"></span>
+                                    Coprología
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="uroanalisis" name="uroanalisis">
+                                    <span class="checkmark"></span>
+                                    Uroanálisis
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="hemoparasitos" name="hemoparasitos">
+                                    <span class="checkmark"></span>
+                                    Hemoparásitos
+                                </label>
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="otro" name="otro">
+                                    <span class="checkmark"></span>
+                                    Otro Examen
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="diagnostico_presuntivo">Diagnóstico Presuntivo</label>
+                            <textarea id="diagnostico_presuntivo" name="diagnostico_presuntivo" placeholder="Ej. Otitis externa bilateral por Malassezia, sospecha de alergia alimentaria."></textarea>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="tratamiento">Tratamiento Recomendado / Receta</label>
+                            <textarea id="tratamiento" name="tratamiento" placeholder="Ej. Limpieza de conductos con solución antiséptica, Otomax gotas c/12h por 7 días."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+               
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="save-history-btn">
+                        <i class="fas fa-save"></i> Registrar Historia Clínica
+                    </button>
+                </div>
+            </form>
+        </section>
+
+      
+        <section class="tab-content" id="tab-manage">
+            
+           
+            <div class="filters-card">
+                <div class="filters-header">
+                    <h3><i class="fas fa-sliders-h"></i> Filtros de Búsqueda</h3>
+                    <button class="clear-filters-btn" id="clear-filters-btn">Limpiar Filtros</button>
+                </div>
+                <div class="filters-grid">
+                    <div class="form-group">
+                        <label for="filter-search">Buscar Propietario o Mascota</label>
+                        <div class="search-input-wrapper">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="filter-search" placeholder="Buscar por Nombre, C.I., Raza...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-especie">Filtrar por Especie</label>
+                        <select id="filter-especie">
+                            <option value="">Todas las especies</option>
+                            <option value="CAN">Canino</option>
+                            <option value="FEL">Felino</option>
+                            <option value="AVE">Ave</option>
+                            <option value="EXO">Exótico</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-doctor">Filtrar por Doctor</label>
+                        <input type="text" id="filter-doctor" placeholder="Buscar por nombre de doctor...">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-fecha-inicio">Desde</label>
+                        <input type="date" id="filter-fecha-inicio">
+                    </div>
+                    <div class="form-group">
+                        <label for="filter-fecha-fin">Hasta</label>
+                        <input type="date" id="filter-fecha-fin">
+                    </div>
+                </div>
+            </div>
+
+           
+            <div class="records-card">
+                <div class="records-header">
+                    <h3><i class="fas fa-list-alt"></i> Listado de Historias Clínicas</h3>
+                    <span class="records-counter" id="records-counter">Cargando registros...</span>
+                </div>
+
+                <div class="table-container">
+                    <table class="records-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Propietario / C.I.</th>
+                                <th>Teléfono</th>
+                                <th>Mascota (Especie / Raza)</th>
+                                <th>Doctor Atendió</th>
+                                <th>Diagnóstico</th>
+                                <th class="actions-col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-tbody">
+                            <tr>
+                                <td colspan="7" class="loading-td">
+                                    <div class="spinner"></div> Cargando registros de la veterinaria...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+   
+    <div class="modal" id="details-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-folder-open"></i> Historia Clínica Detallada</h2>
+                <button class="close-modal-btn" id="close-modal-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-details-body">
+               
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn btn-secondary" id="modal-close-action">Cerrar</button>
+                <button class="modal-btn btn-primary" id="modal-edit-action"><i class="fas fa-edit"></i> Editar Registro</button>
+            </div>
+        </div>
+    </div>
+
+   
+    <div id="footer-root"></div>
+
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="success-icon-wrapper">
+                <i class="fas fa-check"></i>
+            </div>
+            <p class="success-modal-message" id="successModalMessage">El registro se ha realizado correctamente</p>
+        </div>
+    </div>
+
+    <script src="../js/RegisterClient.js" type="module"></script>
+</body>
+
+</html>

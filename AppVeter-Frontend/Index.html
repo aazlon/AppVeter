@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; font-src 'self' data: https://cdnjs.cloudflare.com; img-src 'self' data: blob: http://localhost:3000 http://127.0.0.1:3000; connect-src 'self' http://localhost:3000 http://127.0.0.1:3000 ws: wss:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pets Products 2022 C.A | Tu clínica veterinaria de confianza</title>
+    <meta name="description"
+        content="Cuidamos de tus mascotas con el mejor equipo profesional. Servicios de cirugía, vacunación y estética canina.">
+
+    
+    <link rel="stylesheet" href="src/css/navbar.css">
+    <link rel="stylesheet" href="src/css/footer.css">
+    <link rel="stylesheet" href="src/css/Index.css">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">  
+</head>
+
+<body>
+
+    
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo-container">
+                <span class="logo-text">Pets Products 2022 C.A</span>
+            </div>
+            <div class="nav-links">
+                <button class="nav-btn" id="btn-novedades">Novedades</button>
+                <button class="nav-btn" id="btn-acerca">Acerca de</button>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <a href="src/html/Login.html" class="auth-btn btn-login">Iniciar sesión</a>
+            <a href="src/html/Register.html" class="auth-btn btn-register">Regístrate</a>
+        </div>
+    </nav>
+
+    
+    <main>
+        
+        <section class="hero" style="background-image: url('src/assets/veter1.png');">
+            
+            <div class="hero-content">
+                <span class="hero-tag">¡Bienvenidos a Pets" Products 2022 C.A!</span>
+                <h1 class="hero-title">El bienestar de tu mascota es nuestra prioridad</h1>
+                <p class="hero-description">
+                    Ofrecemos servicios médicos de alta calidad en un ambiente cálido y profesional.
+                    Porque sabemos que son parte de tu familia.
+                </p>
+            </div>
+        </section>
+
+        
+        <section class="services">
+            <div class="section-header">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <p class="section-subtitle">Contamos con todo lo necesario para que tu mascota se mantenga saludable y
+                    feliz.</p>
+            </div>
+
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3 class="service-name">Consulta General</h3>
+                    <p class="service-text">Revisiones periódicas para asegurar el crecimiento y salud óptima de tu
+                        compañero.</p>
+                </div>
+
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-syringe"></i></div>
+                    <h3 class="service-name">Vacunación</h3>
+                    <p class="service-text">Planes de vacunación completos para prevenir enfermedades comunes y
+                        peligrosas.</p>
+                </div>
+
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-scissors"></i></div>
+                    <h3 class="service-name">Estética Canina</h3>
+                    <p class="service-text">Baño, corte y cuidado de la piel con productos especializados para cada tipo
+                        de pelaje.</p>
+                </div>
+
+                
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-microscope"></i></div>
+                    <h3 class="service-name">Laboratorio</h3>
+                    <p class="service-text">Análisis clínicos rápidos y precisos para diagnósticos exactos en menor
+                        tiempo.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+    <div id="footer-root"></div>
+
+    
+    <script src="src/js/Index.js" type="module"></script>
+</body>
+
+</html>
