@@ -7,7 +7,8 @@
     "start": "node Server.js",
     "dev": "node --watch Server.js",
     "start:pm2": "pm2 start ecosystem.config.cjs",
-    "lint": "node --check Server.js && node --check src/config/Config.js && node --check src/middleware/auth.js && node --check src/controllers/UsersController.js && node --check src/controllers/CitaController.js && node --check src/controllers/NotificacionController.js && node --check src/controllers/VeterinaryController.js && node --check src/controllers/ServiceController.js && node --check src/controllers/NovedadController.js && node --check src/models/User.js && node --check src/models/Cita.js && node --check src/models/Notificacion.js && node --check src/models/Veterinary.js && node --check src/models/Service.js && node --check src/models/Novedad.js && node --check src/models/Rol.js"
+    "lint": "node --check Server.js && node --check src/config/Config.js && node --check src/middleware/auth.js && node --check src/store/MysqlRateStore.js && node --check src/services/Notifier.js && node --check src/controllers/UsersController.js && node --check src/controllers/CitaController.js && node --check src/controllers/NotificacionController.js && node --check src/controllers/VeterinaryController.js && node --check src/controllers/ServiceController.js && node --check src/controllers/NovedadController.js && node --check src/models/User.js && node --check src/models/Cita.js && node --check src/models/Notificacion.js && node --check src/models/Veterinary.js && node --check src/models/Service.js && node --check src/models/Novedad.js && node --check src/models/Rol.js && node --check scripts/rate-limit-check.js",
+    "check:ratelimit": "node scripts/rate-limit-check.js"
   },
   "keywords": [],
   "author": "",

@@ -282,9 +282,18 @@ module.exports = {
                 return res.status(500).json({ success: false, message: 'Error al verificar el código' });
             }
             if (!user) {
-                return res.status(400).json({ success: false, message: 'Código inválido' });
+                // Cada código erróneo consume un intento: sin esto el candado de
+                // MAX_RESET_ATTEMPTS nunca se activaba (solo se incrementaba al acertar).
+                User.incrementResetAttempts(email, (incErr) => {
+                    if (incErr) {
+                        logger.error({ err: incErr }, 'Error actualizando intentos de código');
+                    }
+                    return res.status(400).json({ success: false, message: 'Código inválido' });
+                });
+                return;
             }
             if (new Date() > new Date(user.reset_code_expires)) {
+                User.invalidateResetCode(email, () => {});
                 return res.status(400).json({ success: false, message: 'El código ha expirado. Solicita uno nuevo.' });
             }
             if (Number(user.reset_code_attempts || 0) >= MAX_RESET_ATTEMPTS) {
@@ -292,12 +301,7 @@ module.exports = {
                 return res.status(400).json({ success: false, message: 'Demasiados intentos. Solicita un código nuevo.' });
             }
 
-            User.incrementResetAttempts(email, (incErr) => {
-                if (incErr) {
-                    logger.error({ err: incErr }, 'Error actualizando intentos de código');
-                }
-                return res.status(200).json({ success: true, message: 'Código verificado correctamente' });
-            });
+            return res.status(200).json({ success: true, message: 'Código verificado correctamente' });
         });
     },
 
@@ -318,9 +322,18 @@ module.exports = {
                 return res.status(500).json({ success: false, message: 'Error al verificar el código' });
             }
             if (!user) {
-                return res.status(400).json({ success: false, message: 'Código inválido' });
+                // También cuenta aquí: si no, llamar directamente a este endpoint
+                // saltaba el candado de intentos de /verify-reset-code.
+                User.incrementResetAttempts(email, (incErr) => {
+                    if (incErr) {
+                        logger.error({ err: incErr }, 'Error actualizando intentos de código');
+                    }
+                    return res.status(400).json({ success: false, message: 'Código inválido' });
+                });
+                return;
             }
             if (new Date() > new Date(user.reset_code_expires)) {
+                User.invalidateResetCode(email, () => {});
                 return res.status(400).json({ success: false, message: 'El código ha expirado. Solicita uno nuevo.' });
             }
             if (Number(user.reset_code_attempts || 0) >= MAX_RESET_ATTEMPTS) {

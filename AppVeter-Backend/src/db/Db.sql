@@ -194,6 +194,24 @@ CREATE TABLE IF NOT EXISTS notificaciones(
   FOREIGN KEY(emisor_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS rate_limits(
+  bucket VARCHAR(191) NOT NULL,
+  window_start DATETIME(3) NOT NULL,
+  hits INT UNSIGNED NOT NULL DEFAULT 0,
+  expires_at DATETIME(3) NOT NULL,
+  PRIMARY KEY (bucket),
+  INDEX idx_rate_limits_expires_at (expires_at)
+ );
+
+ CREATE TABLE IF NOT EXISTS sse_counters(
+  kind VARCHAR(20) NOT NULL,
+  scope_key VARCHAR(191) NOT NULL,
+  connections INT UNSIGNED NOT NULL DEFAULT 0,
+  updated_at DATETIME(3) NOT NULL,
+  PRIMARY KEY (kind, scope_key),
+  INDEX idx_sse_counters_connections (connections)
+ );
+
 CREATE INDEX IF NOT EXISTS idx_users_reset_code_expires ON users(reset_code_expires);
 CREATE INDEX IF NOT EXISTS idx_citas_user_id ON citas(user_id);
 CREATE INDEX IF NOT EXISTS idx_citas_estado ON citas(estado);

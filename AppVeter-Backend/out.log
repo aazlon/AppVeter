@@ -1,0 +1,5 @@
+◇ injected env (18) from .env // tip: ⌘ override existing { override: true }
+DATABASE CONNECTED! Tablas verificadas/creadas.
+Migraciones completadas.
+Base de datos inicializada.
+Servidor corriendo en http://localhost:3000

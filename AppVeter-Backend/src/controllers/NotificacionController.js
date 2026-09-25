@@ -163,21 +163,48 @@ NotificacionController.getUnreadCount = async (req, res) => {
 };
 
 NotificacionController.stream = async (req, res) => {
+    const connection = await Notifier.subscribe(req.user.id, res, req.ip);
+
+    if (!connection.ok) {
+        if (connection.reason === 'error') {
+            return res.status(503).json({
+                success: false,
+                message: 'No se pudo abrir la conexión en tiempo real. Intenta de nuevo.'
+            });
+        }
+        res.setHeader('Retry-After', '30');
+        return res.status(429).json({
+            success: false,
+            message: 'Se excedió el número máximo de conexiones en tiempo real.',
+            retryAfterSeconds: 30
+        });
+    }
+
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
+    res.setHeader('X-Accel-Buffering', 'no');
     res.flushHeaders?.();
 
     res.write(`data: ${JSON.stringify({ type: 'connected', user_id: req.user.id })}\n\n`);
-    Notifier.subscribe(req.user.id, res);
+
+    const send = (chunk) => {
+        if (res.writableEnded || res.destroyed) return;
+        try {
+            res.write(chunk);
+        } catch (err) {
+            clearInterval(heartbeat);
+        }
+    };
 
     const heartbeat = setInterval(() => {
-        res.write(`: ping\n\n`);
+        send(': ping\n\n');
     }, 25000);
 
-    req.on('close', () => {
-        clearInterval(heartbeat);
-    });
+    const stop = () => clearInterval(heartbeat);
+    req.on('close', stop);
+    req.on('error', stop);
+    res.on('error', stop);
 };
 
 module.exports = NotificacionController;
