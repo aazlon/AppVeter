@@ -67,6 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentPage = 1;
     let totalPages = 1;
     let recordsAbortController = null;
+    let loadingRecords = false;
+    const recordDeletesInFlight = new Set();
 
 
     const fullName = userData.name || userData.nombre || userData.username || 'Secretaria';
@@ -243,8 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resetPage) currentPage = 1;
 
         if (recordsAbortController) recordsAbortController.abort();
-        recordsAbortController = new AbortController();
-        const signal = recordsAbortController.signal;
+        const controller = new AbortController();
+        recordsAbortController = controller;
+        const signal = controller.signal;
+        loadingRecords = true;
 
         const queryParams = apiUrl(`${VETERINARY_API}/records`, {
             search: filterSearch.value.trim(),
@@ -291,6 +295,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                 </tr>
             `;
+        } finally {
+            if (recordsAbortController === controller) loadingRecords = false;
         }
     }
 
@@ -379,11 +385,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Página ${currentPage} de ${totalPages}</span>
             <button class="btn-pagination-next" ${currentPage >= totalPages ? 'disabled' : ''}>Siguiente <i class="fas fa-chevron-right"></i></button>
         `;
-        controls.querySelector('.btn-pagination-prev').addEventListener('click', () => {
-            if (currentPage > 1) { currentPage--; loadHistories(false); }
+        const prevBtn = controls.querySelector('.btn-pagination-prev');
+        const nextBtn = controls.querySelector('.btn-pagination-next');
+
+        prevBtn.addEventListener('click', () => {
+            if (loadingRecords || currentPage <= 1) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage--;
+            loadHistories(false);
         });
-        controls.querySelector('.btn-pagination-next').addEventListener('click', () => {
-            if (currentPage < totalPages) { currentPage++; loadHistories(false); }
+        nextBtn.addEventListener('click', () => {
+            if (loadingRecords || currentPage >= totalPages) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage++;
+            loadHistories(false);
         });
     }
 
@@ -613,10 +630,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     async function deleteRecordConfirm(mascotaId, petName) {
+        if (recordDeletesInFlight.has(mascotaId)) return;
         const check = confirm(`¿Estás completamente seguro de que deseas eliminar permanentemente la historia clínica de ${petName}?\nEsta acción no se puede deshacer.`);
         
         if (!check) return;
 
+        recordDeletesInFlight.add(mascotaId);
         try {
             const response = await apiFetch(`${VETERINARY_API}/records/${mascotaId}`, {
                 method: 'DELETE'
@@ -633,6 +652,8 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error('Error al eliminar registro:', error);
             alert('Error de red al intentar eliminar.');
+        } finally {
+            recordDeletesInFlight.delete(mascotaId);
         }
     }
 

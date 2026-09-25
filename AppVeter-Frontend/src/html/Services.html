@@ -81,7 +81,19 @@
         <p>No hay servicios disponibles aún.</p>
     </div>
 
-   
+    <div class="delete-confirm-modal" id="deleteConfirmModal">
+        <div class="delete-confirm-content">
+            <div class="delete-confirm-icon">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+            <p class="delete-confirm-message">¿Está seguro(a) de eliminar este servicio?</p>
+            <div class="delete-confirm-actions">
+                <button type="button" class="btn-confirm-no" id="btnConfirmNo">No</button>
+                <button type="button" class="btn-confirm-yes" id="btnConfirmYes">Sí</button>
+            </div>
+        </div>
+    </div>
+
     <div id="footer-root"></div>
 
     <script src="../js/Services.js" type="module"></script>

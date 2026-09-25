@@ -43,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let pendingCitaId = null;
     let currentPage = 1;
     let totalPages = 1;
+    let loadingCitas = false;
+    let lastRefreshAt = 0;
 
     initNotificationModal(userData);
     loadNotificationCount(notificationBadge);
@@ -53,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     refreshBtn.addEventListener('click', () => {
+        if (Date.now() - lastRefreshAt < 1000) return;
+        lastRefreshAt = Date.now();
         loadCitas(true);
         loadNotificationCount(notificationBadge);
     });
@@ -90,6 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadCitas(resetPage = true) {
         if (resetPage) currentPage = 1;
         const estado = filterEstado.value;
+        loadingCitas = true;
 
         try {
             citasTbody.innerHTML = `
@@ -129,6 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     </td>
                 </tr>
             `;
+        } finally {
+            loadingCitas = false;
         }
     }
 
@@ -210,11 +217,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Página ${currentPage} de ${totalPages}</span>
             <button class="btn-pagination-next" ${currentPage >= totalPages ? 'disabled' : ''}>Siguiente <i class="fas fa-chevron-right"></i></button>
         `;
-        controls.querySelector('.btn-pagination-prev').addEventListener('click', () => {
-            if (currentPage > 1) { currentPage--; loadCitas(false); }
+        const prevBtn = controls.querySelector('.btn-pagination-prev');
+        const nextBtn = controls.querySelector('.btn-pagination-next');
+
+        prevBtn.addEventListener('click', () => {
+            if (loadingCitas || currentPage <= 1) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage--;
+            loadCitas(false);
         });
-        controls.querySelector('.btn-pagination-next').addEventListener('click', () => {
-            if (currentPage < totalPages) { currentPage++; loadCitas(false); }
+        nextBtn.addEventListener('click', () => {
+            if (loadingCitas || currentPage >= totalPages) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage++;
+            loadCitas(false);
         });
     }
 

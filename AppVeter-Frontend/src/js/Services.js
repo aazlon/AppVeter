@@ -147,6 +147,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     btnCancelForm.addEventListener('click', resetForm);
+
+    const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+    const btnConfirmNo = document.getElementById('btnConfirmNo');
+    const btnConfirmYes = document.getElementById('btnConfirmYes');
+
+    btnConfirmNo.addEventListener('click', () => {
+        pendingDeleteId = null;
+        deleteConfirmModal.classList.remove('active');
+    });
+
+    btnConfirmYes.addEventListener('click', confirmDeleteService);
 });
 
 async function loadServices(resetPage = true) {
@@ -190,8 +201,16 @@ function renderLoadMore(grid, prefix) {
     btn.style.cssText = 'grid-column:1/-1;padding:0.8rem;border-radius:10px;border:1px solid var(--border-color);background:transparent;cursor:pointer;font-weight:600;';
     btn.textContent = 'Cargar más';
     btn.addEventListener('click', () => {
+        if (btn.disabled || currentPage >= totalPages) return;
+        btn.disabled = true;
+        btn.textContent = 'Cargando...';
         currentPage++;
-        loadServices(false);
+        loadServices(false).finally(() => {
+            if (document.contains(btn)) {
+                btn.disabled = false;
+                btn.textContent = 'Cargar más';
+            }
+        });
     });
     grid.appendChild(btn);
 }
@@ -251,22 +270,50 @@ function editService(service) {
     document.getElementById('admin-form-section').scrollIntoView({ behavior: 'smooth' });
 }
 
-async function deleteService(id) {
-    if (!confirm('¿Estás seguro de eliminar este servicio?')) return;
+const deletesInFlight = new Set();
+let pendingDeleteId = null;
+
+function deleteService(id) {
+    if (deletesInFlight.has(id)) return;
+    pendingDeleteId = id;
+    document.getElementById('deleteConfirmModal').classList.add('active');
+}
+
+async function confirmDeleteService() {
+    const id = pendingDeleteId;
+    if (id === null || deletesInFlight.has(id)) return;
+
+    const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+    const btnConfirmYes = document.getElementById('btnConfirmYes');
+    const btnConfirmNo = document.getElementById('btnConfirmNo');
+
+    deletesInFlight.add(id);
+    btnConfirmYes.disabled = true;
+    btnConfirmYes.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+    btnConfirmNo.disabled = true;
 
     try {
         const response = await apiFetch(`${API_URL}/${id}`, { method: 'DELETE' });
         const result = await response.json();
 
         if (result.success) {
+            pendingDeleteId = null;
+            deleteConfirmModal.classList.remove('active');
             loadServices(true);
             showToast('Servicio eliminado correctamente', 'success');
         } else {
+            deleteConfirmModal.classList.remove('active');
             showToast(result.message || 'Error al eliminar el servicio', 'error');
         }
     } catch (error) {
         console.error('Error:', error);
+        deleteConfirmModal.classList.remove('active');
         showToast('Error de conexión con el servidor', 'error');
+    } finally {
+        deletesInFlight.delete(id);
+        btnConfirmYes.disabled = false;
+        btnConfirmYes.textContent = 'Sí';
+        btnConfirmNo.disabled = false;
     }
 }
 

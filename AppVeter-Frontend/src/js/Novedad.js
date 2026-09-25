@@ -186,8 +186,16 @@ function renderLoadMore(grid, prefix) {
     btn.style.cssText = 'grid-column:1/-1;padding:0.8rem;border-radius:10px;border:1px solid var(--border-color);background:transparent;cursor:pointer;font-weight:600;';
     btn.textContent = 'Cargar más';
     btn.addEventListener('click', () => {
+        if (btn.disabled || currentPage >= totalPages) return;
+        btn.disabled = true;
+        btn.textContent = 'Cargando...';
         currentPage++;
-        loadNovedades(false);
+        loadNovedades(false).finally(() => {
+            if (document.contains(btn)) {
+                btn.disabled = false;
+                btn.textContent = 'Cargar más';
+            }
+        });
     });
     grid.appendChild(btn);
 }
@@ -245,9 +253,13 @@ function editNovedad(novedad) {
     document.getElementById('admin-form-section').scrollIntoView({ behavior: 'smooth' });
 }
 
+const deletesInFlight = new Set();
+
 async function deleteNovedad(id) {
+    if (deletesInFlight.has(id)) return;
     if (!confirm('¿Estás seguro de eliminar esta novedad?')) return;
 
+    deletesInFlight.add(id);
     try {
         const response = await apiFetch(`${API_URL}/${id}`, { method: 'DELETE' });
         const result = await response.json();
@@ -261,6 +273,8 @@ async function deleteNovedad(id) {
     } catch (error) {
         console.error('Error:', error);
         showToast('Error de conexión con el servidor', 'error');
+    } finally {
+        deletesInFlight.delete(id);
     }
 }
 

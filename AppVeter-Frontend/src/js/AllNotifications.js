@@ -48,6 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentPage = 1;
     let totalPages = 1;
+    let loadingNotifications = false;
+    let lastRefreshAt = 0;
+    let listReloadTimer = null;
+    const readsInFlight = new Set();
+
+    function scheduleListReload() {
+        if (listReloadTimer) return;
+        listReloadTimer = setTimeout(() => {
+            listReloadTimer = null;
+            loadNotifications(true);
+        }, 400);
+    }
 
     initNotificationModal(userData, { bindBellButton: false });
     loadNotificationCount(notificationBadge);
@@ -78,18 +90,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    refreshBtn.addEventListener('click', () => {
+    const throttledRefresh = () => {
+        if (Date.now() - lastRefreshAt < 1000) return;
+        lastRefreshAt = Date.now();
         loadNotificationCount(notificationBadge);
         loadNotifications(true);
-    });
+    };
 
-    btnNotifications.addEventListener('click', () => {
-        loadNotificationCount(notificationBadge);
-        loadNotifications(true);
-    });
+    refreshBtn.addEventListener('click', throttledRefresh);
+
+    btnNotifications.addEventListener('click', throttledRefresh);
 
     async function loadNotifications(resetPage = true) {
         if (resetPage) currentPage = 1;
+        loadingNotifications = true;
         try {
             notificationsList.innerHTML = '<div class="loading-notifications"><div class="spinner"></div> Cargando notificaciones...</div>';
 
@@ -104,11 +118,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 totalPages = (result.pagination && result.pagination.totalPages) || 1;
                 displayNotifications(notifications, result.pagination);
             } else {
-                notificationsList.innerHTML = '<div class="no-notifications"><i class="fas fa-bell-slash"></i><p>Error al cargar notificaciones</p></div>';
+                notificationsList.innerHTML = `<div class="no-notifications"><i class="fas fa-bell-slash"></i><p>${escapeHtml(result.message || 'Error al cargar notificaciones')}</p></div>`;
             }
         } catch (error) {
             console.error('Error al cargar notificaciones:', error);
             notificationsList.innerHTML = '<div class="no-notifications"><i class="fas fa-bell-slash"></i><p>Error de conexión</p></div>';
+        } finally {
+            loadingNotifications = false;
         }
     }
 
@@ -125,11 +141,22 @@ document.addEventListener('DOMContentLoaded', () => {
             <span>Página ${currentPage} de ${totalPages}</span>
             <button class="btn-pagination-next" ${currentPage >= totalPages ? 'disabled' : ''}>Siguiente <i class="fas fa-chevron-right"></i></button>
         `;
-        controls.querySelector('.btn-pagination-prev').addEventListener('click', () => {
-            if (currentPage > 1) { currentPage--; loadNotifications(false); }
+        const prevBtn = controls.querySelector('.btn-pagination-prev');
+        const nextBtn = controls.querySelector('.btn-pagination-next');
+
+        prevBtn.addEventListener('click', () => {
+            if (loadingNotifications || currentPage <= 1) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage--;
+            loadNotifications(false);
         });
-        controls.querySelector('.btn-pagination-next').addEventListener('click', () => {
-            if (currentPage < totalPages) { currentPage++; loadNotifications(false); }
+        nextBtn.addEventListener('click', () => {
+            if (loadingNotifications || currentPage >= totalPages) return;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            currentPage++;
+            loadNotifications(false);
         });
     }
 
@@ -190,14 +217,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function markAsRead(notifId) {
+        if (readsInFlight.has(notifId)) return;
+        readsInFlight.add(notifId);
         try {
             await apiFetch(`/notificaciones/${notifId}/read`, {
                 method: 'PUT'
             });
             loadNotificationCount(notificationBadge);
-            loadNotifications(true);
+            scheduleListReload();
         } catch (error) {
             console.error('Error al marcar notificación como leída:', error);
+        } finally {
+            readsInFlight.delete(notifId);
         }
     }
 

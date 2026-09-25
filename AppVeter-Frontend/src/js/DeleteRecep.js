@@ -68,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (!confirmed) return;
 
+                        btn.disabled = true;
                         try {
                             const delResponse = await apiFetch(`/users/${id}`, {
                                 method: 'DELETE'
@@ -84,6 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         } catch (error) {
                             console.error('Error:', error);
                             alert('Error de conexión con el servidor.');
+                        } finally {
+                            btn.disabled = false;
                         }
                     });
                 });
