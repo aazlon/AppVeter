@@ -220,3 +220,47 @@
     margin-bottom: 10px;
     color: #ddd;
 }
+
+
+/* =========================================================
+   RESPONSIVE - Pantallas pequeñas
+   ========================================================= */
+
+@media (max-width: 480px) {
+    /* Menos aire en cabecera, cuerpo y pie del modal */
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        padding: 1rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.1rem;
+        flex-wrap: wrap;
+        min-width: 0;
+    }
+
+    .modal-footer {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .modal-footer .modal-btn {
+        width: 100%;
+    }
+
+    /* Notificación: menos padding y gap, avatar más compacto */
+    .notification-item {
+        padding: 11px;
+        gap: 8px;
+    }
+
+    .notification-icon {
+        min-width: 44px;
+    }
+
+    .notification-icon .notification-avatar {
+        width: 42px;
+        height: 42px;
+    }
+}

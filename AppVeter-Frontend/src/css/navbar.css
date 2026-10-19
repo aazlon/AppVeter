@@ -59,6 +59,28 @@
     gap: 1.5rem;
 }
 
+/* Botón hamburguesa para el menú móvil. Oculto en escritorio;
+   se muestra en el media query de 768px. */
+.nav-toggle {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-main);
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.nav-toggle:hover {
+    color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
 .nav-btn {
     text-decoration: none;
     color: var(--text-main);
@@ -234,9 +256,137 @@
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
+        /* Si logo + botones no caben en una línea, se parten en dos
+           filas en vez de provocar scroll horizontal */
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
     }
-    .nav-links,
+
+    /* En móvil el nombre del usuario se oculta (queda el avatar) */
     .user-name {
         display: none;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    /* Los enlaces dejan de ser una fila oculta y pasan a ser un panel
+       desplegable bajo la navbar. Se usa la especificidad
+       .navbar .nav-links para ganar a las copias del navbar presentes
+       en Index.css / UserScreen.css / RegisterRecep.css / etc., que
+       siguen ocultándolos con .nav-links { display: none } a este ancho.
+       Los botones que aparecen dentro dependen del rol del usuario
+       (se renderizan u ocultan desde Layout.js). */
+    .navbar .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+        padding: 0.75rem 5% 1rem;
+        background-color: var(--surface-color, #fff);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        z-index: 1001;
+    }
+
+    .navbar.menu-open .nav-links {
+        display: flex;
+    }
+
+    .navbar .nav-links .nav-btn {
+        width: 100%;
+        text-align: left;
+        padding: 0.75rem 0.75rem;
+        font-size: 1rem;
+    }
+
+    .navbar .nav-links .nav-icon-btn {
+        align-self: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.7rem 4%;
+        row-gap: 0.6rem;
+    }
+
+    .nav-left {
+        gap: 0.75rem;
+        min-width: 0;
+    }
+
+    .nav-right {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        /* Si se parte en dos filas, los botones siguen alineados a la derecha */
+        margin-left: auto;
+    }
+
+    /* Selector con especificidad suficiente para ganar a las copias del
+       navbar que viven en Index.css / RegisterRecep.css / UserScreen.css */
+    .navbar .logo-container .logo-text,
+    .navbar .logo-text {
+        font-size: 1rem;
+        line-height: 1.2;
+        white-space: normal;
+    }
+
+    .auth-btn {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-logout {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ============================================================
+   Responsive intermedio (769px - 1200px): el navbar autenticado
+   muestra hasta 7 botones de navegacion + perfil + salir y
+   desbordaba horizontalmente antes del breakpoint de 768px
+   (donde los enlaces se ocultan).
+   ============================================================ */
+@media (max-width: 1200px) {
+    .nav-left {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+    }
+
+    .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-right {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-right {
+        margin-left: auto;
     }
 }

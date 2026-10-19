@@ -1042,6 +1042,15 @@ body {
     .span-full {
         grid-column: span 1;
     }
+    /* Filas de 2 elementos: que puedan saltar de línea en vez de cortarse */
+    .editing-banner,
+    .records-header {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .tab-content {
+        min-width: 0;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1059,5 +1068,170 @@ body {
     }
     .form-section-card {
         padding: 1.5rem;
+    }
+
+    /* Tabla con scroll horizontal en vez de aplastar las columnas */
+    .table-container {
+        -webkit-overflow-scrolling: touch;
+    }
+    .records-table {
+        min-width: 700px;
+    }
+
+    /* Filas de botones de acción: que puedan envolver */
+    .actions-wrapper {
+        flex-wrap: wrap;
+    }
+
+    /* Cabeceras flex: permiten salto de línea en vez de cortarse */
+    .records-header,
+    .editing-banner {
+        flex-wrap: wrap;
+        gap: 0.5rem 1rem;
+    }
+
+    /* Menos padding en las tarjetas de filtros y listado */
+    .filters-card,
+    .records-card {
+        padding: 1.5rem;
+    }
+
+    /* Modal: pies con botones que puedan envolver */
+    .modal-footer {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width: 480px) {
+    .main-container {
+        padding: 1.25rem 1rem 2.5rem;
+        gap: 1.5rem;
+    }
+
+    .module-header {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .module-title {
+        font-size: 1.5rem;
+    }
+
+    .form-section-card {
+        padding: 1.25rem;
+    }
+
+    .filters-card,
+    .records-card {
+        padding: 1.25rem;
+    }
+
+    /* Pestañas: apiladas a ancho completo para que no desborden */
+    .tabs-nav {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .tab-trigger {
+        flex: 1 1 100%;
+        justify-content: center;
+        padding: 0.8rem 1rem;
+    }
+
+    /* Cabeceras apiladas para que no se corte el contador/botón */
+    .filters-header,
+    .records-header,
+    .editing-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .editing-banner {
+        padding: 1rem 1.25rem;
+    }
+
+    /* Botón del formulario a ancho completo */
+    .form-actions {
+        flex-direction: column;
+    }
+    .submit-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 0.9rem 1.5rem;
+    }
+
+    /* Etiqueta encima del valor en pantallas estrechas */
+    .details-item strong {
+        display: block;
+        width: auto;
+        margin-bottom: 2px;
+    }
+
+    /* Menos padding interno del modal */
+    .modal-header {
+        padding: 1.25rem;
+    }
+    .modal-body {
+        padding: 1.25rem;
+    }
+    .modal-footer {
+        padding: 1rem 1.25rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .modal-btn {
+        flex: 1 1 auto;
+        text-align: center;
+    }
+
+    /* Tabla más compacta (sigue con scroll horizontal) */
+    .records-table th,
+    .records-table td {
+        padding: 0.75rem 0.6rem;
+    }
+
+    .checkbox-grid {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+}
+
+/* ============================================================
+   Responsive intermedio (769px - 1200px): copia local del navbar
+   (gana a navbar.css por orden de carga). Evita que logo + enlaces
+   + perfil desborden horizontalmente en tablet.
+   ============================================================ */
+@media (max-width: 1200px) {
+    .nav-left {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+    }
+
+    .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-right {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-right {
+        margin-left: auto;
     }
 }

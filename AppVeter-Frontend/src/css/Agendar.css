@@ -182,3 +182,47 @@
     box-shadow: none;
     background-color: #f0f4f8;
 }
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* --- Tablet / móvil --- */
+@media (max-width: 768px) {
+    /* Campos del formulario: nunca más anchos que su contenedor */
+    .cita-form .form-group input,
+    .cita-form .form-group select,
+    .cita-form .form-group textarea {
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    /* Acciones del formulario: permiten salto de línea si no caben */
+    .cita-form .form-actions {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width: 480px) {
+    .form-section {
+        padding: 15px;
+    }
+
+    .cita-form .form-section-card {
+        padding: 1.25rem;
+    }
+
+    .cita-form .form-actions {
+        flex-direction: column;
+    }
+
+    /* Botón de envío a ancho completo para mejor uso táctil */
+    .cita-form .submit-btn {
+        width: 100%;
+        padding: 15px 20px;
+        justify-content: center;
+    }
+}

@@ -295,6 +295,7 @@ body {
 .table-container {
     width: 100%;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
 }
@@ -411,5 +412,93 @@ body {
         flex-direction: column;
         gap: 0.5rem;
         align-items: flex-start;
+    }
+
+    /* Scroll horizontal de la tabla en vez de columnas aplastadas */
+    .records-table {
+        min-width: 700px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-container {
+        padding: 1.25rem 1rem 2.5rem;
+        gap: 1.5rem;
+    }
+
+    .module-header {
+        padding: 1.5rem 1.25rem;
+    }
+
+    .module-title {
+        font-size: 1.5rem;
+    }
+
+    .records-section {
+        padding: 0.75rem;
+    }
+
+    .section-title {
+        font-size: 1.15rem;
+    }
+
+    .records-table th,
+    .records-table td {
+        padding: 0.75rem 0.6rem;
+    }
+}
+
+/* Cadena de flex: body es flex-column y .main-container es su flex-item
+   con margin:0 auto (los márgenes auto en el eje cruzado anulan el
+   "stretch" y el ancho pasa a fit-content = min-content, que incluye el
+   min-width:700px de la tabla y se propagaba al documento entero).
+   Con width:100% el ancho es definite y el scroll ocurre dentro de
+   .table-container. */
+.main-container {
+    width: 100%;
+    min-width: 0;
+}
+
+.main-container > .records-section {
+    min-width: 0;
+}
+
+/* ============================================================
+   Responsive intermedio (769px - 1200px): copia local del navbar
+   (gana a navbar.css por orden de carga). Evita que logo + enlaces
+   + perfil desborden horizontalmente en tablet.
+   ============================================================ */
+@media (max-width: 1200px) {
+    .nav-left {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+    }
+
+    .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-right {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-right {
+        margin-left: auto;
     }
 }

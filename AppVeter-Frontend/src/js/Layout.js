@@ -1,6 +1,7 @@
 import { getSession, getRoleFlags } from './Roles.js';
 import { initLegalModal } from './LegalModal.js';
 import { logoutRequest } from './api.js';
+import { initNavToggle } from './navToggle.js';
 import { escapeHtml, escapeAttr, safeUrl } from './security.js';
 
 const ACTIVE_MAP = {
@@ -91,6 +92,9 @@ export function renderNavbar() {
                     <span class="notification-badge" id="notification-badge">0</span>
                 </button>
             </div>
+            <button class="nav-toggle" id="btn-nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
         <div class="nav-right">
             <div class="user-profile" id="user-profile">
@@ -126,6 +130,9 @@ export function renderGuestNavbar() {
                 <button class="nav-btn${activeClass('btn-novedades', activeId)}" id="btn-novedades">Novedades</button>
                 <button class="nav-btn${activeClass('btn-acerca', activeId)}" id="btn-acerca">Acerca de</button>
             </div>
+            <button class="nav-toggle" id="btn-nav-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
         <div class="nav-right">
             <a href="./Login.html" class="auth-btn btn-login">Iniciar sesión</a>
@@ -141,6 +148,8 @@ function bindGuestHandlers() {
     if (guestHandlersBound) return;
     guestHandlersBound = true;
 
+    initNavToggle();
+
     const go = (id, href) => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('click', () => { window.location.href = href; });
@@ -154,6 +163,8 @@ function bindGuestHandlers() {
 function bindHandlers() {
     if (handlersBound) return;
     handlersBound = true;
+
+    initNavToggle();
 
     const go = (id, href) => {
         const el = document.getElementById(id);

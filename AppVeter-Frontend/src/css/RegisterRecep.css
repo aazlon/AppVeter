@@ -499,6 +499,10 @@ body {
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
+        /* Si logo + botones no caben, se parten en dos filas en vez de
+           provocar scroll horizontal */
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
     }
     .nav-links,
     .user-name {
@@ -507,5 +511,113 @@ body {
     .form-row {
         flex-direction: column;
         gap: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 0.7rem 4%;
+        row-gap: 0.6rem;
+    }
+
+    .nav-left {
+        gap: 0.75rem;
+        min-width: 0;
+    }
+
+    .nav-right {
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-left: auto;
+    }
+
+    .logo-container .logo-text {
+        font-size: 1rem;
+        line-height: 1.2;
+        white-space: normal;
+    }
+
+    .btn-logout {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+    }
+
+    .register-recep-main {
+        padding: 1rem;
+    }
+
+    .register-recep-container {
+        max-width: 100%;
+    }
+
+    .register-recep-left {
+        padding: 1.5rem;
+    }
+
+    .register-recep-right {
+        padding: 1.5rem;
+    }
+
+    .register-recep-hero h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .register-recep-hero p {
+        font-size: 1rem;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .image-upload-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================================
+   Responsive intermedio (769px - 1200px): copia local del navbar
+   (gana a navbar.css por orden de carga). Evita que logo + enlaces
+   + perfil desborden horizontalmente en tablet.
+   ============================================================ */
+@media (max-width: 1200px) {
+    .nav-left {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        row-gap: 0.35rem;
+    }
+
+    .nav-btn {
+        padding: 0.45rem 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-right {
+        gap: 0.6rem;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 1024px) {
+    .navbar {
+        flex-wrap: wrap;
+        row-gap: 0.5rem;
+    }
+
+    .nav-right {
+        margin-left: auto;
     }
 }

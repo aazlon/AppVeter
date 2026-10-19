@@ -1,9 +1,11 @@
 import { showSuccessModal } from './SuccessModal.js';
 import { renderFooter } from './Layout.js';
 import { apiFetch } from './api.js';
+import { initNavToggle } from './navToggle.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderFooter();
+    initNavToggle();
     const form = document.getElementById('registerForm');
     const imageInput = document.getElementById('imageInput');
     const imagePreview = document.getElementById('imagePreview');

@@ -411,3 +411,62 @@
         transform: scale(1);
     }
 }
+
+
+/* =========================================================
+   RESPONSIVE - Pantallas pequeñas
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .notifications-list {
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Cabecera del listado: apilar título y contador si no caben */
+    .notifications-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    /* Botones de acción a ancho completo */
+    .actions-grid .action-btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Notificación: menos padding y gap, avatar más compacto */
+    .notification-item,
+    .notifications-list .notification-item {
+        padding: 14px;
+        gap: 10px;
+    }
+
+    .notification-icon {
+        min-width: 46px;
+    }
+
+    .notification-icon .notification-avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .notification-title {
+        font-size: 15px;
+    }
+
+    /* Modal de confirmación de eliminación */
+    .delete-confirm-content {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .delete-confirm-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .delete-confirm-actions {
+        flex-direction: column;
+    }
+}

@@ -247,4 +247,57 @@
     .stat-item {
         align-items: center;
     }
+
+    .about-main {
+        padding: 1rem;
+    }
+
+    .about-container {
+        max-width: 100%;
+    }
+
+    .about-left {
+        padding: 1.5rem;
+    }
+
+    .about-right {
+        padding: 1.5rem;
+    }
+
+    .about-tag {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.85rem;
+    }
+
+    .about-hero h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .about-hero p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .about-section-icon {
+        font-size: 1.75rem;
+    }
+
+    .about-section-title {
+        font-size: 1.35rem;
+    }
+
+    .value-item {
+        padding: 0.7rem 0.85rem;
+        font-size: 0.9rem;
+        gap: 0.6rem;
+    }
+
+    .about-divider {
+        margin: 1.25rem 0;
+    }
 }

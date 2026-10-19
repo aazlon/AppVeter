@@ -173,4 +173,47 @@
     .legal-modal-header h2 {
         font-size: 1.05rem;
     }
+
+    .legal-modal-footer {
+        flex-wrap: wrap;
+        gap: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .legal-modal {
+        padding: 0.75rem;
+    }
+
+    .legal-modal-content {
+        max-height: 94vh;
+    }
+
+    .legal-modal-header {
+        padding: 1rem;
+    }
+
+    .legal-modal-body {
+        padding: 1.25rem 1rem;
+    }
+
+    .legal-modal-header h2 {
+        font-size: 1rem;
+        gap: 0.4rem;
+    }
+
+    .legal-modal-close {
+        font-size: 1.75rem;
+        flex-shrink: 0;
+    }
+
+    .legal-modal-footer {
+        padding: 1rem;
+        justify-content: stretch;
+    }
+
+    .legal-modal-btn {
+        width: 100%;
+        padding: 0.85rem 1rem;
+    }
 }

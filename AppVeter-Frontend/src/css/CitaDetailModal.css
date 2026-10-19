@@ -174,3 +174,59 @@
 .btn-danger:hover {
     background-color: #5a6268;
 }
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* --- Tablet / móvil --- */
+@media (max-width: 768px) {
+    /* Pies de modal: permiten salto de línea en vez de desbordar */
+    #detail-modal .modal-footer,
+    .confirm-modal-content .modal-footer {
+        flex-wrap: wrap;
+        gap: .75rem;
+    }
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width: 480px) {
+    /* Etiqueta encima del valor en pantallas estrechas */
+    .detail-item strong {
+        display: block;
+        width: auto;
+        margin-bottom: 2px;
+    }
+
+    /* Indicador de confirmación: permite wrap y menos padding */
+    .confirm-action-indicator {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    /* Menos padding interno en el modal de confirmación */
+    .confirm-modal-content .modal-header {
+        padding: 1rem 1.25rem;
+    }
+
+    .confirm-modal-content .modal-body {
+        padding: 1.25rem;
+    }
+
+    /* Botones del modal apilados y a ancho completo */
+    #detail-modal .modal-footer,
+    .confirm-modal-content .modal-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .75rem;
+        padding: 1rem 1.25rem;
+    }
+
+    #detail-modal .modal-footer .modal-btn,
+    .confirm-modal-content .modal-footer .modal-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

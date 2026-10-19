@@ -398,6 +398,18 @@
     .novedad-card-image {
         height: 180px;
     }
+
+    .novedad-card-image-placeholder {
+        height: 180px;
+    }
+
+    .no-novedades-message {
+        padding: 2rem 1rem;
+    }
+
+    .loading-novedades {
+        padding: 2rem 1rem;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
@@ -436,4 +448,36 @@
     background-color: var(--primary-dark);
     border-color: var(--primary-dark);
     box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 480px) {
+    .novedades-container {
+        padding: 1.5rem 1rem 3rem;
+        gap: 1.5rem;
+    }
+
+    .file-input-placeholder {
+        padding: 1.5rem;
+    }
+
+    /* Botones del formulario: a ancho completo para que no se desborden */
+    .form-actions {
+        flex-wrap: wrap;
+    }
+
+    .form-actions .btn-cancel,
+    .form-actions .btn-submit {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .novedad-card-body {
+        padding: 1.25rem;
+    }
+
+    .novedad-card-actions {
+        padding: 1rem 1.25rem;
+        gap: 0.6rem;
+        flex-wrap: wrap;
+    }
 }

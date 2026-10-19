@@ -581,3 +581,107 @@
 #detail-reject-btn {
     margin-right: auto;
 }
+
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+/* --- Tablet / móvil --- */
+@media (max-width: 768px) {
+    /* Menos padding en secciones y tarjetas */
+    .filters-section,
+    .citas-section {
+        padding: 15px;
+    }
+
+    .filters-card,
+    .citas-card {
+        padding: 15px;
+    }
+
+    /* Cabeceras flex: permiten salto de línea en vez de cortarse */
+    .filters-header,
+    .citas-header {
+        flex-wrap: wrap;
+        gap: .5rem 1rem;
+    }
+
+    /* Tabla con scroll horizontal en vez de aplastar las columnas */
+    .table-container {
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .citas-table {
+        min-width: 700px;
+    }
+
+    /* Filas de botones: que puedan envolver */
+    .actions-wrapper {
+        flex-wrap: wrap;
+    }
+
+    /* Pies de los modales de esta pantalla: que envuelvan */
+    #detail-modal .modal-footer,
+    .confirm-modal-content .modal-footer,
+    .edit-date-modal-content .modal-footer {
+        flex-wrap: wrap;
+        gap: .75rem;
+    }
+}
+
+/* --- Móvil pequeño --- */
+@media (max-width: 480px) {
+    /* Cabeceras apiladas para que no se corte el contador/botón */
+    .filters-header,
+    .citas-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .5rem;
+    }
+
+    /* Etiqueta encima del valor en pantallas estrechas */
+    .detail-item strong,
+    .edit-date-info strong {
+        display: block;
+        width: auto;
+        margin-bottom: 2px;
+    }
+
+    /* Indicador de confirmación: permite wrap y menos padding */
+    .confirm-action-indicator {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 15px;
+    }
+
+    /* Menos padding interno en los modales de esta pantalla */
+    #detail-modal .modal-header,
+    .confirm-modal-content .modal-header,
+    .edit-date-modal-content .modal-header {
+        padding: 1rem 1.25rem;
+    }
+
+    #detail-modal .modal-body,
+    .confirm-modal-content .modal-body,
+    .edit-date-modal-content .modal-body {
+        padding: 1.25rem;
+    }
+
+    /* Botones del modal apilados y a ancho completo */
+    #detail-modal .modal-footer,
+    .confirm-modal-content .modal-footer,
+    .edit-date-modal-content .modal-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: .75rem;
+        padding: 1rem 1.25rem;
+    }
+
+    #detail-modal .modal-footer .modal-btn,
+    .confirm-modal-content .modal-footer .modal-btn,
+    .edit-date-modal-content .modal-footer .modal-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

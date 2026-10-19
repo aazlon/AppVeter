@@ -280,3 +280,40 @@
         font-size: 2rem;
     }
 }
+
+@media (max-width: 480px) {
+    .login-main {
+        padding: 1rem;
+    }
+
+    .login-container {
+        max-width: 100%;
+    }
+
+    .login-left {
+        padding: 1.5rem;
+    }
+
+    .login-right {
+        padding: 1.5rem;
+    }
+
+    .login-hero h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .login-hero p {
+        font-size: 1rem;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}

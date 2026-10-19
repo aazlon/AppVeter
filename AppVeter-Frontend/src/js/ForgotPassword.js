@@ -1,8 +1,10 @@
 import { renderFooter } from './Layout.js';
 import { API_BASE as API_ROOT, apiFetch } from './api.js';
+import { initNavToggle } from './navToggle.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderFooter();
+    initNavToggle();
     const API_BASE = `${API_ROOT}/users`;
 
     const step1 = document.getElementById('step1');

@@ -323,3 +323,44 @@
         gap: 0;
     }
 }
+
+@media (max-width: 480px) {
+    .register-main {
+        padding: 1rem;
+    }
+
+    .register-container {
+        max-width: 100%;
+    }
+
+    .register-left {
+        padding: 1.5rem;
+    }
+
+    .register-right {
+        padding: 1.5rem;
+    }
+
+    .register-hero h2 {
+        font-size: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .register-hero p {
+        font-size: 1rem;
+    }
+
+    .form-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .image-upload-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .btn-submit {
+        padding: 0.9rem;
+        font-size: 1rem;
+    }
+}

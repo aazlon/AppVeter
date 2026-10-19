@@ -101,3 +101,24 @@ footer {
         text-align: center;
     }
 }
+
+@media (max-width: 480px) {
+    footer {
+        padding: 2rem 4%;
+    }
+
+    .footer-container {
+        gap: 1.5rem;
+    }
+
+    .footer-social-section {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .footer-social-section .social-icons {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}

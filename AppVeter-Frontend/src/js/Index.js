@@ -1,7 +1,9 @@
 import { renderFooter } from './Layout.js';
+import { initNavToggle } from './navToggle.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderFooter();
+    initNavToggle();
     const navbar = document.querySelector('.navbar');
     
     

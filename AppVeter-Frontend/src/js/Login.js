@@ -1,8 +1,10 @@
 import { renderFooter } from './Layout.js';
 import { apiFetch } from './api.js';
+import { initNavToggle } from './navToggle.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     renderFooter();
+    initNavToggle();
     const loginForm = document.getElementById('loginForm');
     const btnSubmit = document.getElementById('btnSubmit');
     const errorMessage = document.getElementById('errorMessage');

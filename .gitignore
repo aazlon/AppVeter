@@ -1,0 +1,17 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno (NUNCA subir secrets)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+.pm2/
+
+# Editor / sistema
+.vscode/
+.DS_Store
+Thumbs.db
