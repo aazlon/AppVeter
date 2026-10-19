@@ -67,7 +67,7 @@
 
 .register-left {
     flex: 1;
-    background: linear-gradient(rgba(30, 63, 107, 0.8), rgba(44, 90, 148, 0.9)), url('../../src/assets/chef.jpg') center/cover no-repeat;
+    background: linear-gradient(rgba(30, 63, 107, 0.8), rgba(44, 90, 148, 0.9)), url('../../src/assets/veter1.png') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
