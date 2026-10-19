@@ -310,6 +310,23 @@
     .navbar .nav-links .nav-icon-btn {
         align-self: flex-start;
     }
+
+    /* La campana se traslada a .nav-right (la mueve Layout.js) y se ancla
+       al extremo izquierdo de la navbar, dejando el perfil y "Salir" a la
+       derecha. .nav-right ocupa el ancho disponible para que la campana
+       pueda pegarse al borde aunque la fila vaya aparte (en móvil la
+       navbar se parte en dos filas). justify-content: flex-end mantiene
+       a la derecha el resto de casos (invitado, admin o veterinario,
+       que no tienen campana). */
+    .navbar .nav-right {
+        flex: 1 1 auto;
+        margin-left: 0;
+        justify-content: flex-end;
+    }
+
+    .navbar .nav-right .nav-icon-btn {
+        margin-right: auto;
+    }
 }
 
 @media (max-width: 480px) {

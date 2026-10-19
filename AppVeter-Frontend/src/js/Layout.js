@@ -37,6 +37,57 @@ const FOOTER_HTML = `
 let handlersBound = false;
 let guestHandlersBound = false;
 
+/* ============================================================
+   Ubicación de la campana de notificaciones (cliente / recepcionista)
+
+   En escritorio la campana vive dentro de .nav-links, junto al resto de
+   botones. En vista responsive (<=768px) esos enlaces se esconden dentro
+   del menú hamburguesa, así que la campana se mueve al contenedor
+   .nav-right, justo a la izquierda del botón de perfil, para que siga
+   siendo visible sin abrir el menú. Al volver a escritorio regresa a
+   .nav-links.
+
+   Se desplaza EL MISMO nodo del DOM (no se clona), por lo que los
+   listeners y las referencias que guardan NotificationModal.js,
+   AllNotifications.js y el resto de páginas sobre #btn-notifications y
+   #notification-badge siguen siendo válidos.
+   ============================================================ */
+const RESPONSIVE_QUERY = '(max-width: 768px)';
+let bellViewportBound = false;
+
+function syncBellPlacement() {
+    const bell = document.getElementById('btn-notifications');
+    const navbar = document.getElementById('main-navbar');
+    if (!bell || !navbar) return;
+
+    const profile = document.getElementById('user-profile');
+    const links = navbar.querySelector('.nav-links');
+    const isResponsive = window.matchMedia(RESPONSIVE_QUERY).matches;
+
+    if (isResponsive && profile && profile.parentElement) {
+        // Falta moverlo, o quedó en otra posición dentro de .nav-right
+        if (bell.parentElement !== profile.parentElement || bell.nextElementSibling !== profile) {
+            profile.parentElement.insertBefore(bell, profile);
+        }
+    } else if (links && bell.parentElement !== links) {
+        links.appendChild(bell);
+    }
+}
+
+function watchBellPlacement() {
+    syncBellPlacement();
+    if (bellViewportBound) return;
+    bellViewportBound = true;
+
+    const onChange = () => syncBellPlacement();
+    const mq = window.matchMedia(RESPONSIVE_QUERY);
+    if (typeof mq.addEventListener === 'function') {
+        mq.addEventListener('change', onChange);
+    } else if (typeof mq.addListener === 'function') {
+        mq.addListener(onChange);
+    }
+}
+
 function getActiveId() {
     const file = (window.location.pathname.split('/').pop() || '').toLowerCase();
     return ACTIVE_MAP[file] || null;
@@ -108,6 +159,11 @@ export function renderNavbar() {
     </nav>`;
 
     getOrCreateRoot('navbar-root', 'start').innerHTML = html;
+
+    // En vista responsive la campana sale del menú desplegable y queda
+    // justo a la izquierda del botón de perfil (.nav-right).
+    if (showBell) watchBellPlacement();
+
     return true;
 }
 
