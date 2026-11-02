@@ -1,0 +1,23 @@
+{
+  "name": "mcp-vercel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor MCP global para conectar cualquier proyecto con Vercel: proyectos, despliegues, logs y deploy.",
+  "type": "module",
+  "bin": {
+    "mcp-vercel": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "vercel": "^65.9.0",
+    "zod": "^3.25.76"
+  }
+}

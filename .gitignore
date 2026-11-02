@@ -1,5 +1,6 @@
 # Dependencias
 node_modules/
+**/node_modules/
 
 # Variables de entorno (NUNCA subir secrets)
 .env
@@ -10,8 +11,25 @@ node_modules/
 *.log
 logs/
 .pm2/
+out.log
 
 # Editor / sistema
 .vscode/
+.idea/
 .DS_Store
 Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp
+.cache/
+
+# Vercel
+.vercel/
+
+# Freebuff (herramienta local)
+.freebuff/
+
+# Archivos de build
+dist/
+build/
