@@ -13,7 +13,11 @@ const pool = mysql.createPool({
     queueLimit: 200,
     connectTimeout: 60000,
     enableKeepAlive: true,
-    keepAliveInitialDelay: 10000
+    keepAliveInitialDelay: 10000,
+    // Proveedores gestionados (p.ej. Aiven) exigen TLS: actívalo con DB_SSL=true.
+    ...(String(process.env.DB_SSL).toLowerCase() === 'true'
+        ? { ssl: { rejectUnauthorized: process.env.DB_SSL_STRICT === 'true' } }
+        : {})
 });
 
 pool.on('error', (err) => {

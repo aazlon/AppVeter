@@ -1,13 +1,13 @@
 // Configuración de la aplicación
-// En desarrollo usa localhost, en producción usa la URL del backend en Railway
+// En desarrollo usa localhost, en producción usa la URL del backend en Render
 
 window.__APP_CONFIG__ = {
-    // URL del backend - Cambiar a la URL de Railway cuando se despliegue
-    API_URL: 'http://localhost:3000/api',
-    
+    // URL del backend - Cambiar a la URL de Render cuando se despliegue
+    API_URL: 'https://pets-products-backend.onrender.com/api',
+
     // Nombre de la aplicación
     APP_NAME: "Pet's Product's",
-    
+
     // Versión
     VERSION: '1.1.0'
 };
