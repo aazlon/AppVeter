@@ -211,7 +211,7 @@ function bindGuestHandlers() {
         if (el) el.addEventListener('click', () => { window.location.href = href; });
     };
 
-    go('btn-inicio', '../../Index.html');
+    go('btn-inicio', '../../index.html');
     go('btn-novedades', './Novedad.html');
     go('btn-acerca', './About.html');
 }
@@ -244,7 +244,7 @@ function bindHandlers() {
     if (logout) {
         logout.addEventListener('click', async () => {
             await logoutRequest();
-            window.location.href = '../../Index.html';
+            window.location.href = '../../index.html';
         });
     }
 }

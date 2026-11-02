@@ -4,9 +4,7 @@
   "buildCommand": null,
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/", "destination": "/Index.html" },
-    { "source": "/src/:path*", "destination": "/src/:path*" },
-    { "source": "/(Index|index).html", "destination": "/Index.html" }
+    { "source": "/src/:path*", "destination": "/src/:path*" }
   ],
   "headers": [
     {

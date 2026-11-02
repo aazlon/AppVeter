@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('main-navbar').style.padding = '1rem 5%';
 
     document.getElementById('btn-inicio').addEventListener('click', () => {
-        window.location.href = '../../Index.html';
+        window.location.href = '../../index.html';
     });
 
     document.getElementById('btn-novedades').addEventListener('click', () => {

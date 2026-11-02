@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (response.ok && result.success) {
                     await logoutRequest();
                     deleteConfirmModal.classList.remove('active');
-                    showSuccessModal('Cuenta eliminada satisfactoriamente', '../../Index.html');
+                    showSuccessModal('Cuenta eliminada satisfactoriamente', '../../index.html');
                 } else {
                     deleteConfirmModal.classList.remove('active');
                     showError(result.message || 'Error al eliminar la cuenta.');

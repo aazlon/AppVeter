@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('main-navbar').style.padding = '1rem 5%';
 
     document.getElementById('btn-inicio').addEventListener('click', () => {
-        window.location.href = '../../Index.html';
+        window.location.href = '../../index.html';
     });
 
     document.getElementById('btn-novedades').addEventListener('click', () => {
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (response.ok && result.success) {
-                showSuccessModal('El registro se ha realizado correctamente', '../../Index.html');
+                showSuccessModal('El registro se ha realizado correctamente', '../../index.html');
             } else {
                 
                 if (result.errors && Array.isArray(result.errors)) {
