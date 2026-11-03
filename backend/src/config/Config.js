@@ -159,7 +159,10 @@ const ensureAdminUser = async () => {
                 'SELECT id FROM users WHERE email = ? LIMIT 1', [adminEmail]
             );
             if (users.length === 0) {
-                console.warn(`ADMIN_EMAIL=${adminEmail}: usuario no encontrado, no se asignó rol.`);
+                const registrados = await queryAsync(connection,
+                    'SELECT id, username, email FROM users'
+                );
+                console.warn(`ADMIN_EMAIL=${adminEmail}: usuario no encontrado. Registrados: ${JSON.stringify(registrados)}`);
                 return;
             }
             await queryAsync(connection, `
