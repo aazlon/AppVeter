@@ -230,18 +230,18 @@ CREATE TABLE IF NOT EXISTS user_session_revocations(
   INDEX idx_sse_counters_connections (connections)
  );
 
-CREATE INDEX IF NOT EXISTS idx_users_reset_code_expires ON users(reset_code_expires);
-CREATE INDEX IF NOT EXISTS idx_citas_user_id ON citas(user_id);
-CREATE INDEX IF NOT EXISTS idx_citas_estado ON citas(estado);
-CREATE INDEX IF NOT EXISTS idx_citas_fecha_cita ON citas(fecha_cita);
-CREATE INDEX IF NOT EXISTS idx_mascotas_client_id ON mascotas(client_id);
-CREATE INDEX IF NOT EXISTS idx_notificaciones_user_id ON notificaciones(user_id);
-CREATE INDEX IF NOT EXISTS idx_notificaciones_leida ON notificaciones(leida);
-CREATE INDEX IF NOT EXISTS idx_notificaciones_created_at ON notificaciones(created_at);
-CREATE INDEX IF NOT EXISTS idx_novedades_user_id ON novedades(user_id);
-CREATE INDEX IF NOT EXISTS idx_novedades_created_at ON novedades(created_at);
-CREATE INDEX IF NOT EXISTS idx_services_user_id ON services(user_id);
-CREATE INDEX IF NOT EXISTS idx_user_has_roles_id_rol ON user_has_roles(id_rol);
-CREATE INDEX IF NOT EXISTS idx_mascota_estado_mascota_id ON mascota_estado(mascota_id);
-CREATE INDEX IF NOT EXISTS idx_mascota_examen_fisico_mascota_id ON mascota_examen_fisico(mascota_id);
-CREATE INDEX IF NOT EXISTS idx_mascota_examenes_paraclinicos_mascota_id ON mascota_examenes_paraclinicos(mascota_id);
+CREATE INDEX idx_users_reset_code_expires ON users(reset_code_expires);
+CREATE INDEX idx_citas_user_id ON citas(user_id);
+CREATE INDEX idx_citas_estado ON citas(estado);
+CREATE INDEX idx_citas_fecha_cita ON citas(fecha_cita);
+CREATE INDEX idx_mascotas_client_id ON mascotas(client_id);
+CREATE INDEX idx_notificaciones_user_id ON notificaciones(user_id);
+CREATE INDEX idx_notificaciones_leida ON notificaciones(leida);
+CREATE INDEX idx_notificaciones_created_at ON notificaciones(created_at);
+CREATE INDEX idx_novedades_user_id ON novedades(user_id);
+CREATE INDEX idx_novedades_created_at ON novedades(created_at);
+CREATE INDEX idx_services_user_id ON services(user_id);
+CREATE INDEX idx_user_has_roles_id_rol ON user_has_roles(id_rol);
+CREATE INDEX idx_mascota_estado_mascota_id ON mascota_estado(mascota_id);
+CREATE INDEX idx_mascota_examen_fisico_mascota_id ON mascota_examen_fisico(mascota_id);
+CREATE INDEX idx_mascota_examenes_paraclinicos_mascota_id ON mascota_examenes_paraclinicos(mascota_id);

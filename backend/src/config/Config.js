@@ -79,7 +79,8 @@ const initializeDatabase = async () => {
         // (errno 1824) aunque el orden del script sea correcto. Se desactiva la
         // verificación de FKs solo durante el script y se reactiva al terminar.
         await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 0');
-        await runScript(connection, sqlScript);
+        // ER_DUP_KEYNAME: el índice ya existe (MySQL no admite CREATE INDEX IF NOT EXISTS).
+        await runScript(connection, sqlScript, ['ER_DUP_KEYNAME']);
         await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 1');
         console.log('DATABASE CONNECTED! Tablas verificadas/creadas.');
     } catch (err) {
