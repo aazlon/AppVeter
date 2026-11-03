@@ -46,14 +46,28 @@ function queryAsync(connection, sql, params = []) {
 const splitStatements = (script) => {
     return script
         .split(/;\s*(?:\r?\n|$)/)
-        .map((s) => s.trim())
-        .filter((s) => s.length > 0 && !s.startsWith('--'));
+        // Quita SOLO las líneas de comentario del statement, no el statement entero
+        // (antes un `--` arriba de un CREATE TABLE hacía que se descartara completo).
+        .map((s) => s
+            .split(/\r?\n/)
+            .filter((line) => {
+                const t = line.trim();
+                return t.length > 0 && !t.startsWith('--') && !t.startsWith('#');
+            })
+            .join('\n')
+            .trim())
+        .filter((s) => s.length > 0);
 };
 
-const runScript = async (connection, script) => {
+const runScript = async (connection, script, ignoreCodes = []) => {
     const statements = splitStatements(script);
     for (const statement of statements) {
-        await queryAsync(connection, statement);
+        try {
+            await queryAsync(connection, statement);
+        } catch (err) {
+            if (ignoreCodes.includes(err.code || '')) continue;
+            throw err;
+        }
     }
 };
 
@@ -61,7 +75,12 @@ const initializeDatabase = async () => {
     const connection = await getConnectionAsync();
     try {
         const sqlScript = fs.readFileSync(path.join(__dirname, '../db/Db.sql')).toString();
+        // Gestionados como Aiven pueden rechazar la creación de tablas hijas con FK
+        // (errno 1824) aunque el orden del script sea correcto. Se desactiva la
+        // verificación de FKs solo durante el script y se reactiva al terminar.
+        await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 0');
         await runScript(connection, sqlScript);
+        await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 1');
         console.log('DATABASE CONNECTED! Tablas verificadas/creadas.');
     } catch (err) {
         console.error('Error ejecutando Db.sql:', err);
