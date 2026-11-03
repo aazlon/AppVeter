@@ -310,12 +310,13 @@ app.use((err, req, res, next) => {
     res.status(500).json({ success: false, message: 'Error interno del servidor' });
 });
 
-const { initializeDatabase, runMigrations } = require('./src/config/Config');
+const { initializeDatabase, runMigrations, ensureAdminUser } = require('./src/config/Config');
 
 async function startServer() {
     try {
         await initializeDatabase();
         await runMigrations();
+        await ensureAdminUser();
         console.log('Base de datos inicializada.');
 
         const server = app.listen(port, () => {

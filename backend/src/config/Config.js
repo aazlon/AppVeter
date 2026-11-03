@@ -149,4 +149,31 @@ const runMigrations = async () => {
     }
 };
 
-module.exports = { pool, initializeDatabase, runMigrations, getConnectionAsync, queryAsync };
+const ensureAdminUser = async () => {
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (!adminEmail) return;
+    try {
+        const connection = await getConnectionAsync();
+        try {
+            const users = await queryAsync(connection,
+                'SELECT id FROM users WHERE email = ? LIMIT 1', [adminEmail]
+            );
+            if (users.length === 0) {
+                console.warn(`ADMIN_EMAIL=${adminEmail}: usuario no encontrado, no se asignó rol.`);
+                return;
+            }
+            await queryAsync(connection, `
+                INSERT INTO user_has_roles(id_user, id_rol, created_at, updated_at)
+                VALUES(?, 1, NOW(), NOW())
+                ON DUPLICATE KEY UPDATE updated_at = NOW()
+            `, [users[0].id]);
+            console.log(`Rol ADMINISTRADOR verificado para ${adminEmail}.`);
+        } finally {
+            connection.release();
+        }
+    } catch (err) {
+        console.error('Error al asegurar rol ADMINISTRADOR (continuando):', err.message);
+    }
+};
+
+module.exports = { pool, initializeDatabase, runMigrations, ensureAdminUser, getConnectionAsync, queryAsync };
