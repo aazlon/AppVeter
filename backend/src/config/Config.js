@@ -160,7 +160,7 @@ const ensureAdminUser = async () => {
             );
             if (users.length === 0) {
                 const registrados = await queryAsync(connection,
-                    'SELECT id, username, email FROM users'
+                    'SELECT id, username, email, image FROM users'
                 );
                 console.warn(`ADMIN_EMAIL=${adminEmail}: usuario no encontrado. Registrados: ${JSON.stringify(registrados)}`);
                 return;
@@ -170,7 +170,10 @@ const ensureAdminUser = async () => {
                 VALUES(?, 1, NOW(), NOW())
                 ON DUPLICATE KEY UPDATE updated_at = NOW()
             `, [users[0].id]);
-            console.log(`Rol ADMINISTRADOR verificado para ${adminEmail}.`);
+            const img = await queryAsync(connection,
+                'SELECT image FROM users WHERE id = ?', [users[0].id]
+            );
+            console.log(`Rol ADMINISTRADOR verificado para ${adminEmail}. image=${JSON.stringify(img[0] && img[0].image)}`);
         } finally {
             connection.release();
         }
