@@ -1,12 +1,8 @@
 const multer = require('multer');
-const fs = require('fs');
 const path = require('path');
 
-const uploadDir = path.join(__dirname, '../../public/uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
+// Los archivos subidos se procesan en memoria: se persisten como data URL base64
+// en la base de datos, no en disco (el disco de Render Free es efímero).
 const ALLOWED_MIMETYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const EXTENSION_BY_MIME = {
     'image/jpeg': '.jpg',
@@ -17,9 +13,7 @@ const EXTENSION_BY_MIME = {
 const ALLOWED_EXTENSIONS = Object.values(EXTENSION_BY_MIME);
 const MAX_SIZE = Number(process.env.UPLOAD_MAX_BYTES) || 5 * 1024 * 1024;
 
-function createUpload(prefix) {
-    // Storage en memoria: las imágenes se guardan en la base de datos (data URL base64),
-    // no en disco, porque el disco de Render Free es efímero y se pierde en cada deploy.
+function createUpload() {
     return multer({
         storage: multer.memoryStorage(),
         limits: { fileSize: MAX_SIZE, files: 1 },
@@ -41,4 +35,4 @@ function imageToDataUrl(file) {
     return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
 }
 
-module.exports = { createUpload, imageToDataUrl, uploadDir, ALLOWED_MIMETYPES, ALLOWED_EXTENSIONS, MAX_SIZE };
+module.exports = { createUpload, imageToDataUrl, ALLOWED_MIMETYPES, ALLOWED_EXTENSIONS, MAX_SIZE };

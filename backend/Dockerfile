@@ -8,7 +8,6 @@ RUN npm ci --omit=dev
 COPY . .
 
 RUN addgroup -S petsproduct && adduser -S petsproduct -G petsproduct \
-    && mkdir -p public/uploads \
     && chown -R petsproduct:petsproduct /app
 
 ENV NODE_ENV=production

@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -259,16 +258,7 @@ uploadPaths.forEach((route) => app.use(route, uploadLimiter));
 // PUT /api/users/:id también admite imagen.
 app.use('/api/users', (req, res, next) => (req.method === 'PUT' ? uploadLimiter(req, res, next) : next()));
 
-app.use('/uploads', apiLimiter);
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads'), {
-    index: false,
-    dotfiles: 'deny',
-    setHeaders: (res) => {
-        res.setHeader('X-Content-Type-Options', 'nosniff');
-        res.setHeader('Content-Security-Policy', "default-src 'none'");
-        res.setHeader('Cache-Control', 'public, max-age=86400');
-    }
-}));
+// Las imágenes se persisten como data URL en la base de datos; no hay directorio de subidas.
 
 app.get('/', (req, res) => {
     res.send('¡Proyecto Node.js iniciado con éxito!');
