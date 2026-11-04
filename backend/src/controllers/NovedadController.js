@@ -1,6 +1,6 @@
 const Novedad = require('../models/Novedad');
 const { parsePagination, buildPagination } = require('../utils/pagination');
-const { uploadUrl } = require('../utils/urls');
+const { imageToDataUrl } = require('../middleware/upload');
 const logger = require('../utils/logger');
 
 module.exports = {
@@ -43,7 +43,7 @@ module.exports = {
             }
 
             if (req.files && req.files.length > 0) {
-                data.image = uploadUrl(req.files[0].filename);
+                data.image = imageToDataUrl(req.files[0]);
             }
 
             Novedad.create(data, (err, result) => {
@@ -124,7 +124,7 @@ module.exports = {
             }
 
             if (req.files && req.files.length > 0) {
-                data.image = uploadUrl(req.files[0].filename);
+                data.image = imageToDataUrl(req.files[0]);
             }
 
             Novedad.update(id, data, (err, result) => {

@@ -8,7 +8,7 @@ const { pool } = require('../config/Config');
 const { sendResetCode } = require('../services/MailerService');
 const { enqueueEmail } = require('../services/EmailQueue');
 const { parsePagination, buildPagination } = require('../utils/pagination');
-const { uploadUrl } = require('../utils/urls');
+const { imageToDataUrl } = require('../middleware/upload');
 const { hasRole, extractTokens } = require('../middleware/auth');
 const { revokeToken, revokeAllForUser } = require('../utils/tokenRevocation');
 const logger = require('../utils/logger');
@@ -163,7 +163,7 @@ module.exports = {
 
             const user = JSON.parse(req.body.user);
             if (req.files && req.files.length > 0) {
-                user.image = uploadUrl(req.files[0].filename);
+                user.image = imageToDataUrl(req.files[0]);
             }
 
             User.update(id, user, (err) => {
@@ -212,7 +212,7 @@ module.exports = {
             }
 
             if (req.files && req.files.length > 0) {
-                user.image = uploadUrl(req.files[0].filename);
+                user.image = imageToDataUrl(req.files[0]);
             }
 
             const userId = await createUserWithRole(user, 3);
@@ -467,7 +467,7 @@ module.exports = {
                 return res.status(400).json({ success: false, message: validationError });
             }
             if (req.files && req.files.length > 0) {
-                user.image = uploadUrl(req.files[0].filename);
+                user.image = imageToDataUrl(req.files[0]);
             }
 
             const userId = await createUserWithRole(user, 2);
@@ -492,7 +492,7 @@ module.exports = {
                 return res.status(400).json({ success: false, message: validationError });
             }
             if (req.files && req.files.length > 0) {
-                user.image = uploadUrl(req.files[0].filename);
+                user.image = imageToDataUrl(req.files[0]);
             }
 
             const userId = await createUserWithRole(user, 4);

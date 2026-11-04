@@ -18,22 +18,10 @@ const ALLOWED_EXTENSIONS = Object.values(EXTENSION_BY_MIME);
 const MAX_SIZE = Number(process.env.UPLOAD_MAX_BYTES) || 5 * 1024 * 1024;
 
 function createUpload(prefix) {
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => cb(null, uploadDir),
-        filename: (req, file, cb) => {
-            const ext = EXTENSION_BY_MIME[file.mimetype] || path.extname(file.originalname).toLowerCase();
-            if (!ALLOWED_EXTENSIONS.includes(ext)) {
-                const err = new Error('Extensión de archivo no permitida.');
-                err.status = 400;
-                return cb(err);
-            }
-            const safePrefix = String(prefix).replace(/[^a-zA-Z0-9_-]/g, '');
-            cb(null, `${safePrefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}${ext}`);
-        }
-    });
-
+    // Storage en memoria: las imágenes se guardan en la base de datos (data URL base64),
+    // no en disco, porque el disco de Render Free es efímero y se pierde en cada deploy.
     return multer({
-        storage,
+        storage: multer.memoryStorage(),
         limits: { fileSize: MAX_SIZE, files: 1 },
         fileFilter: (req, file, cb) => {
             const ext = path.extname(file.originalname).toLowerCase();
@@ -47,4 +35,10 @@ function createUpload(prefix) {
     });
 }
 
-module.exports = { createUpload, uploadDir, ALLOWED_MIMETYPES, ALLOWED_EXTENSIONS, MAX_SIZE };
+// Convierte el archivo subido (buffer en memoria) en data URL base64 para persistirlo en BD.
+function imageToDataUrl(file) {
+    if (!file || !file.buffer) return null;
+    return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+}
+
+module.exports = { createUpload, imageToDataUrl, uploadDir, ALLOWED_MIMETYPES, ALLOWED_EXTENSIONS, MAX_SIZE };

@@ -128,7 +128,11 @@ const MIGRATIONS = [
     "CREATE INDEX idx_mascotas_doctor_nombre ON mascotas(doctor_nombre)",
     "CREATE INDEX idx_clients_fecha ON clients(fecha)",
     "CREATE FULLTEXT INDEX ft_clients_nombre ON clients(nombre_propietario)",
-    "CREATE FULLTEXT INDEX ft_mascotas_nombre ON mascotas(nombre_mascota, raza)"
+    "CREATE FULLTEXT INDEX ft_mascotas_nombre ON mascotas(nombre_mascota, raza)",
+    // Las imágenes se guardan como data URL base64 en BD (disco efímero en Render Free).
+    "ALTER TABLE users MODIFY COLUMN image MEDIUMTEXT NULL",
+    "ALTER TABLE services MODIFY COLUMN image MEDIUMTEXT NULL",
+    "ALTER TABLE novedades MODIFY COLUMN image MEDIUMTEXT NULL"
 ];
 
 const runMigrations = async () => {
@@ -160,7 +164,7 @@ const ensureAdminUser = async () => {
             );
             if (users.length === 0) {
                 const registrados = await queryAsync(connection,
-                    'SELECT id, username, email, image FROM users'
+                    'SELECT id, username, email FROM users'
                 );
                 console.warn(`ADMIN_EMAIL=${adminEmail}: usuario no encontrado. Registrados: ${JSON.stringify(registrados)}`);
                 return;
@@ -170,10 +174,7 @@ const ensureAdminUser = async () => {
                 VALUES(?, 1, NOW(), NOW())
                 ON DUPLICATE KEY UPDATE updated_at = NOW()
             `, [users[0].id]);
-            const img = await queryAsync(connection,
-                'SELECT image FROM users WHERE id = ?', [users[0].id]
-            );
-            console.log(`Rol ADMINISTRADOR verificado para ${adminEmail}. image=${JSON.stringify(img[0] && img[0].image)}`);
+            console.log(`Rol ADMINISTRADOR verificado para ${adminEmail}.`);
         } finally {
             connection.release();
         }
