@@ -1,4 +1,4 @@
--- La base se selecciona por la conexión (DB_NAME); no usar USE para portabilidadCloud.
+
 
  CREATE TABLE IF NOT EXISTS users(
   id BIGINT PRIMARY KEY AUTO_INCREMENT,

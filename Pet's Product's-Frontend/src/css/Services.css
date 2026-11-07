@@ -567,7 +567,7 @@
         padding: 1.5rem;
     }
 
-    /* Botones del formulario: a ancho completo para que no se desborden */
+
     .form-actions {
         flex-wrap: wrap;
     }

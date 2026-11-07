@@ -583,13 +583,9 @@
 }
 
 
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
 
-/* --- Tablet / móvil --- */
 @media (max-width: 768px) {
-    /* Menos padding en secciones y tarjetas */
+
     .filters-section,
     .citas-section {
         padding: 15px;
@@ -600,14 +596,14 @@
         padding: 15px;
     }
 
-    /* Cabeceras flex: permiten salto de línea en vez de cortarse */
+
     .filters-header,
     .citas-header {
         flex-wrap: wrap;
         gap: .5rem 1rem;
     }
 
-    /* Tabla con scroll horizontal en vez de aplastar las columnas */
+
     .table-container {
         -webkit-overflow-scrolling: touch;
     }
@@ -616,12 +612,12 @@
         min-width: 700px;
     }
 
-    /* Filas de botones: que puedan envolver */
+
     .actions-wrapper {
         flex-wrap: wrap;
     }
 
-    /* Pies de los modales de esta pantalla: que envuelvan */
+
     #detail-modal .modal-footer,
     .confirm-modal-content .modal-footer,
     .edit-date-modal-content .modal-footer {
@@ -630,9 +626,9 @@
     }
 }
 
-/* --- Móvil pequeño --- */
+
 @media (max-width: 480px) {
-    /* Cabeceras apiladas para que no se corte el contador/botón */
+
     .filters-header,
     .citas-header {
         flex-direction: column;
@@ -640,7 +636,7 @@
         gap: .5rem;
     }
 
-    /* Etiqueta encima del valor en pantallas estrechas */
+
     .detail-item strong,
     .edit-date-info strong {
         display: block;
@@ -648,14 +644,14 @@
         margin-bottom: 2px;
     }
 
-    /* Indicador de confirmación: permite wrap y menos padding */
+
     .confirm-action-indicator {
         flex-wrap: wrap;
         gap: 12px;
         padding: 15px;
     }
 
-    /* Menos padding interno en los modales de esta pantalla */
+
     #detail-modal .modal-header,
     .confirm-modal-content .modal-header,
     .edit-date-modal-content .modal-header {
@@ -668,7 +664,7 @@
         padding: 1.25rem;
     }
 
-    /* Botones del modal apilados y a ancho completo */
+
     #detail-modal .modal-footer,
     .confirm-modal-content .modal-footer,
     .edit-date-modal-content .modal-footer {

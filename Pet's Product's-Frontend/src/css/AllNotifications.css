@@ -413,9 +413,7 @@
 }
 
 
-/* =========================================================
-   RESPONSIVE - Pantallas pequeñas
-   ========================================================= */
+
 
 @media (max-width: 768px) {
     .notifications-list {
@@ -424,19 +422,19 @@
 }
 
 @media (max-width: 480px) {
-    /* Cabecera del listado: apilar título y contador si no caben */
+
     .notifications-header {
         flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    /* Botones de acción a ancho completo */
+
     .actions-grid .action-btn-secondary {
         width: 100%;
         justify-content: center;
     }
 
-    /* Notificación: menos padding y gap, avatar más compacto */
+
     .notification-item,
     .notifications-list .notification-item {
         padding: 14px;
@@ -456,7 +454,7 @@
         font-size: 15px;
     }
 
-    /* Modal de confirmación de eliminación */
+
     .delete-confirm-content {
         padding: 1.75rem 1.25rem;
     }

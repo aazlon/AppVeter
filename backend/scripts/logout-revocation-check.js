@@ -1,22 +1,4 @@
-#!/usr/bin/env node
-/**
- * Verificación de la revocación de sesión (logout) del backend.
- *
- * Uso (con el servidor corriendo):
- *   node scripts/logout-revocation-check.js
- *
- * Opciones:
- *   --base <url>   Base de la API (por defecto PUBLIC_BASE_URL o http://localhost:3000)
- *
- * Emite JWT sintéticos con el mismo JWT_SECRET que usa el servidor y comprueba
- * que POST /api/users/logout invalida ese token en servidor (lista negra
- * token_revocations) sin afectar a otras sesiones abiertas, y que el flujo
- * restablecer contraseña invalida TODAS las sesiones del usuario
- * (user_session_revocations) sin romper el login posterior.
- *
- * La sección 5 crea un usuario de prueba temporal en la base de datos local y
- * lo elimina al terminar (en `finally`), por lo que no deja datos residuales.
- */
+
 require('dotenv').config();
 const http = require('http');
 const jwt = require('jsonwebtoken');
@@ -71,8 +53,7 @@ async function call(path, { method = 'GET', headers = {}, body } = {}) {
     return { status: response.status, payload };
 }
 
-// Node fetch no siempre permite fijar la cabecera Cookie, así que el canal de
-// cookie se prueba con http.request, que sí la admite.
+
 function callWithCookie(path, { method = 'GET', cookie } = {}) {
     return new Promise((resolve, reject) => {
         const url = new URL(`${BASE}${path}`);
@@ -193,8 +174,7 @@ async function testPasswordResetRevokesAll() {
 
     let userId = null;
     try {
-        // Usuario de prueba con un código de restablecimiento válido, tal como
-        // lo dejaría el flujo forgot-password (sin pasar por el envío de email).
+
         const [inserted] = await db.query(
             `INSERT INTO users
                 (username, email, cedula, name, lastname, phone, password,
@@ -204,9 +184,7 @@ async function testPasswordResetRevokesAll() {
         );
         userId = inserted.insertId;
 
-        // El login usa INNER JOIN con user_has_roles: sin rol, findByUsernameOrEmail
-        // no devuelve la fila y el login respondería 401. Se asigna CLIENTE (3),
-        // el rol que usaría el registro normal (y se borra en cascada al final).
+
         await db.query(
             'INSERT INTO user_has_roles (id_user, id_rol, created_at, updated_at) VALUES (?, 3, NOW(), NOW())',
             [userId]
@@ -229,8 +207,7 @@ async function testPasswordResetRevokesAll() {
             `HTTP ${after.status}${after.payload && after.payload.message ? ` — ${after.payload.message}` : ''}`
         );
 
-        // Espera a que el segundo de emisión (iat) sea posterior al corte para
-        // comprobar que el nuevo login NO queda bloqueado.
+
         await sleep(1200);
         const login = await call('/api/users/login', {
             method: 'POST',
@@ -248,7 +225,7 @@ async function testPasswordResetRevokesAll() {
     } finally {
         try {
             if (userId) {
-                // La fila de corte se elimina en cascada con el usuario.
+
                 await db.query('DELETE FROM users WHERE id = ?', [userId]);
             }
         } catch (_) { /* best-effort */ }

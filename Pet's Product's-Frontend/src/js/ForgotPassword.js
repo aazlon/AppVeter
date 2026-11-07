@@ -31,9 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resendCodeLink = document.getElementById('resendCodeLink');
 
     let currentEmail = '';
-    // Token que emite el backend al verificar el código. Autoriza el cambio de
-    // contraseña con su propio plazo, de modo que el vencimiento del código
-    // solo limite ingresarlo, no el tiempo en elegir la nueva contraseña.
+
     let resetToken = '';
 
     const setLoading = (button, isLoading) => {
@@ -57,8 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         forgotError.textContent = '';
         forgotSuccess.textContent = '';
         codeError.textContent = '';
-        // Resetea colores en línea para que un mensaje de éxito no tiña al
-        // siguiente error.
+
         codeError.style.color = '';
         passwordError.textContent = '';
         passwordError.style.color = '';
@@ -93,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (result.success) {
                 currentEmail = email;
-                // Un código nuevo invalida cualquier token emitido por una
-                // verificación anterior.
+
                 resetToken = '';
                 step2Email.textContent = email;
                 step3Email.textContent = email;
@@ -179,8 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = confirmPasswordInput.value;
 
         if (!resetToken) {
-            // Sin token no hay permiso para cambiar la contraseña: se regresa
-            // al paso del código para verificar de nuevo.
+
             codeError.textContent = 'Tu sesión de restablecimiento expiró. Verifica el código de nuevo.';
             showStep(step2);
             return;
@@ -219,8 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = 'Login.html';
                 }, 2000);
             } else if (result.resetTokenExpired) {
-                // El plazo del token se agotó: se vuelve al paso del código para
-                // verificar de nuevo (el de contraseña no depende del código).
+
                 resetToken = '';
                 codeError.textContent = result.message || 'Tu sesión de restablecimiento expiró. Verifica el código de nuevo.';
                 showStep(step2);
@@ -254,7 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         clearErrors();
         resetCodeInput.value = '';
-        // Cambiar de correo invalida el token de restablecimiento anterior.
+
         resetToken = '';
         showStep(step1);
     });
@@ -280,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if (result.success) {
-                // El código nuevo invalida el token de una verificación previa.
+
                 resetToken = '';
                 resetCodeInput.value = '';
                 codeError.style.color = 'var(--success-color, #27ae60)';

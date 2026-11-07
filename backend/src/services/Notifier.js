@@ -19,7 +19,7 @@ function releaseLocal(res, key) {
     if (set.size === 0) clients.delete(key);
 }
 
-// Reserva una conexión mientras quede aforo. Devuelve false si ya está lleno.
+
 async function reserveConnection(kind, scopeKey, max) {
     const connection = await getConnectionAsync();
     try {
@@ -32,7 +32,7 @@ async function reserveConnection(kind, scopeKey, max) {
                 updated_at = NOW(3)`,
             [kind, scopeKey, max]
         );
-        // affectedRows: 1 insert, 2 actualizado, 0 sin cambio (aforo lleno)
+
         return Number(result.affectedRows) > 0;
     } finally {
         connection.release();

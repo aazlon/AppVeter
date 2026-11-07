@@ -222,12 +222,10 @@
 }
 
 
-/* =========================================================
-   RESPONSIVE - Pantallas pequeñas
-   ========================================================= */
+
 
 @media (max-width: 480px) {
-    /* Menos aire en cabecera, cuerpo y pie del modal */
+
     .modal-header,
     .modal-body,
     .modal-footer {
@@ -249,7 +247,7 @@
         width: 100%;
     }
 
-    /* Notificación: menos padding y gap, avatar más compacto */
+
     .notification-item {
         padding: 11px;
         gap: 8px;

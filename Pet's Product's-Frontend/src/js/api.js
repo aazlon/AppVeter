@@ -1,4 +1,4 @@
-// Importar configuración
+
 import './config.js';
 
 export const API_BASE = (
@@ -200,8 +200,7 @@ export async function logoutRequest() {
     if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function') {
         window.dispatchEvent(new Event('app:session-cleared'));
     }
-    // El token se lee ANTES de borrar el storage para que el backend pueda
-    // revocarlo (cabecera Authorization) además de limpiar la cookie.
+
     const token = getToken();
     try {
         await fetch(`${API_BASE}/users/logout`, {

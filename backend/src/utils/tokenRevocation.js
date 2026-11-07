@@ -4,27 +4,13 @@ const Keys = require('../config/Keys');
 const { queryAsync } = require('../config/Config');
 const logger = require('./logger');
 
-// Control de revocación de JWT en dos niveles:
-//
-// 1. token_revocations (lista negra por token): cada logout almacena el hash
-//    SHA-256 del token junto a su fecha de expiración. Sirve para invalidar una
-//    sesión concreta sin tocar las demás sesiones del mismo usuario.
-//
-// 2. user_session_revocations (corte por usuario): al restablecer la contraseña
-//    se guarda el instante (epoch) a partir del cual ningún JWT emitido antes de
-//    ese momento se acepta. Los tokens del nuevo login (iat posterior) siguen
-//    funcionando.
-//
-// authenticate() consulta ambos en una sola sentencia antes de aceptar la
-// petición; un token capturado deja de servir en cuanto se cierra la sesión o
-// se cambia la contraseña.
+
 
 function hashToken(token) {
     return crypto.createHash('sha256').update(String(token)).digest('hex');
 }
 
-// Solo acepta tokens firmados por nosotros. La expiración se ignora aquí porque
-// un token ya caducado no necesita revocarse, pero su payload sigue válido.
+
 function decodeSignedToken(token) {
     if (!Keys.secretOrKey || !token) return null;
     try {
@@ -48,16 +34,14 @@ async function revokeToken(token) {
         [hashToken(token), expiresAt]
     );
 
-    // Limpieza oportunista de filas ya caducadas (el token no puede usarse
-    // después de expirar, así que esas entradas dejan de ser necesarias).
+
     queryAsync(null, 'DELETE FROM token_revocations WHERE expires_at <= NOW()')
         .catch((err) => logger.error({ err }, 'Error limpiando token_revocations'));
 
     return true;
 }
 
-// Invalida todas las sesiones abiertas de un usuario: cualquier JWT con
-// iat <= corte deja de aceptarse. Se usa al restablecer la contraseña.
+
 async function revokeAllForUser(userId) {
     if (userId === undefined || userId === null || userId === '') return false;
 
@@ -74,9 +58,7 @@ async function revokeAllForUser(userId) {
     return true;
 }
 
-// Devuelve true si el token está en la lista negra o si su emisión (iat) es
-// anterior o igual al corte del usuario. `payload` es el resultado de verificar
-// la firma; si no se pasa, se decodifica aquí.
+
 async function isTokenRevoked(token, payload = null) {
     const p = payload || decodeSignedToken(token);
     if (!p) return false;

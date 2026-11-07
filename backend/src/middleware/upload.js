@@ -1,8 +1,7 @@
 const multer = require('multer');
 const path = require('path');
 
-// Los archivos subidos se procesan en memoria: se persisten como data URL base64
-// en la base de datos, no en disco (el disco de Render Free es efímero).
+
 const ALLOWED_MIMETYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
 const EXTENSION_BY_MIME = {
     'image/jpeg': '.jpg',
@@ -29,7 +28,7 @@ function createUpload() {
     });
 }
 
-// Convierte el archivo subido (buffer en memoria) en data URL base64 para persistirlo en BD.
+
 function imageToDataUrl(file) {
     if (!file || !file.buffer) return null;
     return `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;

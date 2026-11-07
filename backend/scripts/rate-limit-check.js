@@ -1,17 +1,4 @@
-#!/usr/bin/env node
-/**
- * Verificación de los límites de tasa del backend.
- *
- * Uso (con el servidor corriendo y MySQL accesible):
- *   node scripts/rate-limit-check.js
- *
- * Opciones:
- *   --base <url>   Base de la API (por defecto PUBLIC_BASE_URL o http://localhost:3000)
- *   --no-reset     No borra los contadores antes/después (los resultados
- *                  pueden mezclarse con actividad previa)
- *   --keep         Borra al empezar pero deja los contadores al terminar
- *                  (útil para inspeccionar la tabla rate_limits)
- */
+
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 

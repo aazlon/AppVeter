@@ -256,13 +256,12 @@
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
-        /* Si logo + botones no caben en una línea, se parten en dos
-           filas en vez de provocar scroll horizontal */
+
         flex-wrap: wrap;
         row-gap: 0.5rem;
     }
 
-    /* En móvil el nombre del usuario se oculta (queda el avatar) */
+
     .user-name {
         display: none;
     }
@@ -271,13 +270,7 @@
         display: flex;
     }
 
-    /* Los enlaces dejan de ser una fila oculta y pasan a ser un panel
-       desplegable bajo la navbar. Se usa la especificidad
-       .navbar .nav-links para ganar a las copias del navbar presentes
-       en Index.css / UserScreen.css / RegisterRecep.css / etc., que
-       siguen ocultándolos con .nav-links { display: none } a este ancho.
-       Los botones que aparecen dentro dependen del rol del usuario
-       (se renderizan u ocultan desde Layout.js). */
+
     .navbar .nav-links {
         display: none;
         position: absolute;
@@ -311,13 +304,7 @@
         align-self: flex-start;
     }
 
-    /* La campana se traslada a .nav-right (la mueve Layout.js) y se ancla
-       al extremo izquierdo de la navbar, dejando el perfil y "Salir" a la
-       derecha. .nav-right ocupa el ancho disponible para que la campana
-       pueda pegarse al borde aunque la fila vaya aparte (en móvil la
-       navbar se parte en dos filas). justify-content: flex-end mantiene
-       a la derecha el resto de casos (invitado, admin o veterinario,
-       que no tienen campana). */
+
     .navbar .nav-right {
         flex: 1 1 auto;
         margin-left: 0;
@@ -343,12 +330,11 @@
     .nav-right {
         gap: 0.5rem;
         flex-wrap: wrap;
-        /* Si se parte en dos filas, los botones siguen alineados a la derecha */
+
         margin-left: auto;
     }
 
-    /* Selector con especificidad suficiente para ganar a las copias del
-       navbar que viven en Index.css / RegisterRecep.css / UserScreen.css */
+
     .navbar .logo-container .logo-text,
     .navbar .logo-text {
         font-size: 1rem;
@@ -367,12 +353,7 @@
     }
 }
 
-/* ============================================================
-   Responsive intermedio (769px - 1200px): el navbar autenticado
-   muestra hasta 7 botones de navegacion + perfil + salir y
-   desbordaba horizontalmente antes del breakpoint de 768px
-   (donde los enlaces se ocultan).
-   ============================================================ */
+
 @media (max-width: 1200px) {
     .nav-left {
         gap: 0.75rem;

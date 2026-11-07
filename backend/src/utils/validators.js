@@ -1,6 +1,4 @@
-// Validaciones de entrada compartidas por los controladores.
-// Objetivo (PRUEBAS_FUNCIONALES.md 6.2, lección 4): detectar entradas inválidas
-// ANTES de tocar la base de datos y responder 400/404 controlados en lugar de 500.
+
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const DATE_ONLY_REGEX = /^\d{4}-\d{2}-\d{2}$/;
@@ -18,8 +16,7 @@ function isValidId(value) {
     return Number.isInteger(num) && num > 0;
 }
 
-// Valida un texto con formato 'YYYY-MM-DD' que además exista en el calendario
-// (evita cosas como '2026-02-31', que MySQL aceptaría o corrompería).
+
 function parseDateOnly(value) {
     if (typeof value !== 'string' || !DATE_ONLY_REGEX.test(value.trim())) return null;
     const [year, month, day] = value.trim().split('-').map(Number);
@@ -38,7 +35,7 @@ function isValidDateOnly(value) {
     return parseDateOnly(value) !== null;
 }
 
-// 'YYYY-MM-DD' igual o posterior a hoy (fecha local del servidor).
+
 function isTodayOrFutureDate(value) {
     const parsed = parseDateOnly(value);
     if (!parsed) return false;

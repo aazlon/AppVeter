@@ -14,7 +14,7 @@ const pool = mysql.createPool({
     connectTimeout: 60000,
     enableKeepAlive: true,
     keepAliveInitialDelay: 10000,
-    // Proveedores gestionados (p.ej. Aiven) exigen TLS: actívalo con DB_SSL=true.
+
     ...(String(process.env.DB_SSL).toLowerCase() === 'true'
         ? { ssl: { rejectUnauthorized: process.env.DB_SSL_STRICT === 'true' } }
         : {})
@@ -46,8 +46,7 @@ function queryAsync(connection, sql, params = []) {
 const splitStatements = (script) => {
     return script
         .split(/;\s*(?:\r?\n|$)/)
-        // Quita SOLO las líneas de comentario del statement, no el statement entero
-        // (antes un `--` arriba de un CREATE TABLE hacía que se descartara completo).
+
         .map((s) => s
             .split(/\r?\n/)
             .filter((line) => {
@@ -75,11 +74,9 @@ const initializeDatabase = async () => {
     const connection = await getConnectionAsync();
     try {
         const sqlScript = fs.readFileSync(path.join(__dirname, '../db/Db.sql')).toString();
-        // Gestionados como Aiven pueden rechazar la creación de tablas hijas con FK
-        // (errno 1824) aunque el orden del script sea correcto. Se desactiva la
-        // verificación de FKs solo durante el script y se reactiva al terminar.
+
         await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 0');
-        // ER_DUP_KEYNAME: el índice ya existe (MySQL no admite CREATE INDEX IF NOT EXISTS).
+
         await runScript(connection, sqlScript, ['ER_DUP_KEYNAME']);
         await queryAsync(connection, 'SET FOREIGN_KEY_CHECKS = 1');
         console.log('DATABASE CONNECTED! Tablas verificadas/creadas.');

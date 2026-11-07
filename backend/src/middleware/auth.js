@@ -52,8 +52,7 @@ async function authenticate(req, res, next) {
             return res.status(401).json({ success: false, message: 'La sesión fue cerrada. Inicia sesión de nuevo.' });
         }
     } catch (err) {
-        // Sin acceso a la lista de revocaciones no es posible garantizar la
-        // sesión: se rechaza la petición (fail-closed) y se deja constancia.
+
         logger.error({ err }, 'Error al consultar la revocación del token');
         return res.status(500).json({ success: false, message: 'Error verificando la sesión' });
     }

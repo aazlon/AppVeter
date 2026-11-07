@@ -550,13 +550,12 @@ body {
     .action-card {
         width: 100%;
         max-width: 400px;
-        /* Anula el flex: 0 0 240px base para que width:100% sí aplique */
+
         flex: 0 0 auto;
     }
 }
 
-/* Tablet / ancho medio: con 4 tarjetas (rol admin) la fila no cabe
-   y se recortaba la última tarjeta por el flex-wrap: nowrap base. */
+
 @media (max-width: 1200px) {
     .actions-grid {
         flex-wrap: wrap;
@@ -594,11 +593,7 @@ body {
     }
 }
 
-/* ============================================================
-   Responsive intermedio (769px - 1200px): copia local del navbar
-   (gana a navbar.css por orden de carga). Evita que logo + enlaces
-   + perfil desborden horizontalmente en tablet.
-   ============================================================ */
+
 @media (max-width: 1200px) {
     .nav-left {
         gap: 0.75rem;

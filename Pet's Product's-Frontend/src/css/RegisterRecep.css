@@ -499,8 +499,7 @@ body {
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
-        /* Si logo + botones no caben, se parten en dos filas en vez de
-           provocar scroll horizontal */
+
         flex-wrap: wrap;
         row-gap: 0.5rem;
     }
@@ -582,11 +581,7 @@ body {
     }
 }
 
-/* ============================================================
-   Responsive intermedio (769px - 1200px): copia local del navbar
-   (gana a navbar.css por orden de carga). Evita que logo + enlaces
-   + perfil desborden horizontalmente en tablet.
-   ============================================================ */
+
 @media (max-width: 1200px) {
     .nav-left {
         gap: 0.75rem;

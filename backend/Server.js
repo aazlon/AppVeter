@@ -22,10 +22,7 @@ if (!process.env.JWT_SECRET) {
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 
-// Sin proxy delante, confiar únicamente en la IP del socket.
-// Si algún día hay nginx/CDN delante, sube TRUST_PROXY_HOPS en .env al número
-// exacto de proxies. Un valor mayor que el real permite falsear X-Forwarded-For
-// y saltarse todos los límites por IP.
+
 const trustProxyHops = Number(process.env.TRUST_PROXY_HOPS);
 const trustProxy = Number.isInteger(trustProxyHops) && trustProxyHops > 0 ? trustProxyHops : false;
 app.set('trust proxy', trustProxy);
@@ -70,9 +67,6 @@ app.use(helmet({
         }
     }
 }));
-// CORS: los orígenes no permitidos se rechazan de forma controlada (403) y se
-// registran en logs, en lugar de provocar un 500 inesperado. Ver PRUEBAS_
-// FUNCIONALES.md, sección 6.2 (lección 5).
 app.use((req, res, next) => {
     const origin = req.headers.origin;
     if (!isAllowedOrigin(origin)) {
@@ -91,8 +85,7 @@ app.use((req, res, next) => {
 });
 app.use(cors({
     origin: (origin, callback) => {
-        // Los orígenes no permitidos ya fueron filtrados por el middleware
-        // anterior; aquí solo se refleja el origen permitido (o ninguno).
+
         callback(null, origin || false);
     },
     credentials: true,
@@ -110,8 +103,7 @@ app.use(compression());
 
 const MysqlRateStore = require('./src/store/MysqlRateStore');
 
-// Con trust proxy desactivado Express ignora X-Forwarded-For, por lo que la
-// advertencia de express-rate-limit sobre esa cabecera no aplica.
+
 const rateLimitValidation = trustProxy ? true : { default: true, xForwardedForHeader: false };
 
 const isSseStream = (req) => req.path === '/notificaciones/stream';
@@ -179,9 +171,7 @@ const authLimiter = rateLimit({
     handler: rateLimitHandler
 });
 
-// Segundo límite sobre el mismo endpoint: mientras authLimiter cubre la IP,
-// éste cubre la cuenta, para que rotar correos desde una misma IP no esquive
-// la fuerza bruda de contraseñas.
+
 const loginAccountLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: Number(process.env.LOGIN_RATE_LIMIT_MAX) || 10,
@@ -222,8 +212,7 @@ const uploadLimiter = rateLimit({
     handler: rateLimitHandler
 });
 
-// Límites que no necesitan el body van ANTES de express.json(): así un
-// atacante no consume CPU parseando payloads que igual se van a rechazar.
+
 app.use('/api', apiLimiter);
 app.use('/api/notificaciones/stream', sseLimiter);
 app.use('/api', writeLimiter);
@@ -232,7 +221,7 @@ app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// Límites que sí necesitan leer el body (email de login / registro).
+
 app.use('/api/users/login', authLimiter);
 app.use('/api/users/login', loginAccountLimiter);
 app.use('/api/users/forgot-password', authLimiter);
@@ -243,7 +232,7 @@ app.use('/api/users/register_with_image', registerLimiter);
 app.use('/api/users/register-receptionist', registerLimiter);
 app.use('/api/users/register-veterinarian', registerLimiter);
 
-// Rutas que admiten imágenes (hasta 5MB por petición).
+
 const uploadPaths = [
     '/api/users/register_with_image',
     '/api/users/register-receptionist',
@@ -255,10 +244,9 @@ const uploadPaths = [
     '/api/veterinary/register'
 ];
 uploadPaths.forEach((route) => app.use(route, uploadLimiter));
-// PUT /api/users/:id también admite imagen.
+
 app.use('/api/users', (req, res, next) => (req.method === 'PUT' ? uploadLimiter(req, res, next) : next()));
 
-// Las imágenes se persisten como data URL en la base de datos; no hay directorio de subidas.
 
 app.get('/', (req, res) => {
     res.send('¡Proyecto Node.js iniciado con éxito!');

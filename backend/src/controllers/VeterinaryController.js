@@ -3,10 +3,7 @@ const { parsePagination, buildPagination } = require('../utils/pagination');
 const logger = require('../utils/logger');
 const { isNonEmptyString, isValidId, isValidDateOnly } = require('../utils/validators');
 
-// Valida las secciones del formulario de historia clínica antes de tocar la
-// base de datos. `client` y `pet` son obligatorias (coinciden con los campos
-// NOT NULL de clients/mascotas); `state`, `physical` y `paraclinical` son
-// opcionales, pero si se envían deben ser objetos.
+
 function validateHistorySections(historyData) {
     if (!historyData || typeof historyData !== 'object') {
         return 'Debe enviar los datos de la historia clínica';
@@ -70,8 +67,7 @@ module.exports = {
             return res.status(400).json({ success: false, message: error });
         }
 
-        // Las secciones opcionales ausentes se normalizan a objetos vacíos: el
-        // modelo las recorre y todos sus campos son anulables en la base.
+
         historyData.state = historyData.state || {};
         historyData.physical = historyData.physical || {};
         historyData.paraclinical = historyData.paraclinical || {};
@@ -98,8 +94,7 @@ module.exports = {
             fecha_fin: req.query.fecha_fin || ''
         };
 
-        // El rango de fechas se exige completo y con formato válido: un solo
-        // extremo suelto responde 400 en vez de ignorarse en silencio.
+
         if (filters.fecha_inicio && !filters.fecha_fin) {
             return res.status(400).json({ success: false, message: 'Debe indicar fecha_inicio y fecha_fin juntas (o ninguna)' });
         }
@@ -139,9 +134,7 @@ module.exports = {
             return res.status(400).json({ success: false, message: 'El identificador de la historia clínica no es válido' });
         }
 
-        // Mismas reglas que al registrar: la actualización reemplaza la ficha
-        // completa, por lo que los datos de cliente y mascota siguen siendo
-        // obligatorios.
+
         const error = validateHistorySections(historyData);
         if (error) {
             return res.status(400).json({ success: false, message: error });

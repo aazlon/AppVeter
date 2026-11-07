@@ -22,9 +22,7 @@ function formatDateStr(dateStr) {
     return `${parseInt(day)} de ${meses[parseInt(month) - 1]} de ${year}`;
 }
 
-// Valida la fecha de la cita ANTES de tocar la base de datos:
-// formato 'YYYY-MM-DD' válido y no anterior a hoy (misma regla que aplica la
-// interfaz con <input min="hoy">). Devuelve el mensaje de error o null.
+
 function validateFechaCita(fecha_cita) {
     if (!isValidDateOnly(fecha_cita)) {
         return 'La fecha de la cita debe tener un formato válido (AAAA-MM-DD)';
@@ -47,9 +45,7 @@ CitaController.createCita = async (req, res) => {
     try {
         const cita = req.body || {};
 
-        // Validación de campos obligatorios y formatos ANTES de acceder a la
-        // base de datos: así una entrada incompleta o inválida responde 400
-        // controlado y no un 500 proveniente de los límites de la BD.
+
         const camposRequeridos = {
             nombre_propietario: 'el nombre del propietario',
             ci: 'el C.I.',
@@ -73,8 +69,7 @@ CitaController.createCita = async (req, res) => {
         }
 
         if (!hasRole(req, 'ADMINISTRADOR', 'RECEPCIONISTA')) {
-            // El cliente no puede suplantar a otro usuario: su identidad se toma
-            // de la sesión, nunca del payload.
+
             cita.user_id = req.user.id;
         } else if (!cita.user_id) {
             cita.user_id = req.user.id;
@@ -82,12 +77,9 @@ CitaController.createCita = async (req, res) => {
             return res.status(400).json({ success: false, message: 'El usuario asignado a la cita no es válido' });
         }
 
-        // Regla de negocio: toda cita nueva nace PENDIENTE; el estado no lo
-        // decide el cliente sino la recepción/administración al aprobarla.
+
         cita.estado = 'PENDIENTE';
-        // La fecha de solicitud la fija el servidor: es un dato de auditoría,
-        // no un campo que el cliente deba enviar (evita el NOT NULL de la BD
-        // y que un cliente manipule la fecha registrada).
+
         cita.fecha_solicitud = new Date();
 
         pool.getConnection(async (err, connection) => {
@@ -205,7 +197,7 @@ CitaController.updateCitaStatus = async (req, res) => {
         if (estado === 'APROBADA' && !fecha_cita) {
             return res.status(400).json({ success: false, message: 'Debe proporcionar una fecha para la cita' });
         }
-        // La fecha (cuando se envía) se valida de forma estricta antes de la BD.
+
         if (fecha_cita) {
             const errorFecha = validateFechaCita(fecha_cita);
             if (errorFecha) {
@@ -315,8 +307,7 @@ CitaController.updateCitaDate = async (req, res) => {
             return res.status(400).json({ success: false, message: errorFecha });
         }
 
-        // Comprobar existencia antes de actualizar: si no hay cita, se responde
-        // 404 controlado en vez de un 200 engañoso (la tabla no informa).
+
         Cita.getById(id, (err, cita) => {
             if (err) {
                 logger.error({ err }, 'Error al obtener la cita');

@@ -1,10 +1,6 @@
 const nodemailer = require('nodemailer');
 
-// En Render Free los puertos SMTP salientes (25/465/587) están bloqueados, así que
-// el envío en producción va por HTTPS (puerto 443):
-//   1) API de Gmail con OAuth2  (GMAIL_CLIENT_ID / GMAIL_CLIENT_SECRET / GMAIL_REFRESH_TOKEN)
-//   2) API de Brevo             (BREVO_API_KEY)
-//   3) SMTP directo de Gmail     (EMAIL_USER / EMAIL_PASS) — funciona en desarrollo
+
 const GMAIL_SEND_URL = 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send';
 const GMAIL_TOKEN_URL = 'https://oauth2.googleapis.com/token';
 
@@ -12,7 +8,7 @@ const hasGmailApiConfig = () => Boolean(
     process.env.GMAIL_CLIENT_ID && process.env.GMAIL_CLIENT_SECRET && process.env.GMAIL_REFRESH_TOKEN
 );
 
-// Remitente: EMAIL_FROM manda; si no está, se usa la cuenta autenticada (EMAIL_USER).
+
 const senderAddress = () => process.env.EMAIL_FROM || process.env.EMAIL_USER;
 
 const transporter = (process.env.EMAIL_USER && process.env.EMAIL_PASS) ? nodemailer.createTransport({
@@ -28,7 +24,7 @@ const transporter = (process.env.EMAIL_USER && process.env.EMAIL_PASS) ? nodemai
     socketTimeout: 20000
 }) : null;
 
-// Diagnóstico al arrancar: deja claro qué proveedor está activo y avisa si falta configurar.
+
 if (process.env.NODE_ENV === 'production') {
     if (hasGmailApiConfig()) {
         console.log('[Mailer] Envio por API de Gmail (OAuth2, sin SMTP)');
@@ -43,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
     }
 }
 
-// Cache del access token: Google lo emite por 1 hora; se renueva 60 s antes de expirar.
+
 let gmailAccessToken = { value: null, expiresAt: 0 };
 let gmailTokenRequest = null;
 
@@ -51,7 +47,7 @@ const getGmailAccessToken = async () => {
     if (gmailAccessToken.value && Date.now() < gmailAccessToken.expiresAt) {
         return gmailAccessToken.value;
     }
-    // Si dos correos salen a la vez con el token vencido, se comparte una sola petición.
+
     if (gmailTokenRequest) {
         return gmailTokenRequest;
     }
@@ -91,12 +87,12 @@ const getGmailAccessToken = async () => {
     }
 };
 
-// El asunto lleva acentos, así que va codificado según RFC 2047 para no salir corrupto.
+
 const encodeSubject = (subject) => `=?UTF-8?B?${Buffer.from(subject, 'utf8').toString('base64')}?=`;
 
 const wrapBase64 = (value) => value.replace(/(.{76})/g, '$1\r\n');
 
-// La API de Gmail exige el mensaje MIME completo en base64url.
+
 const buildMime = (mail) => {
     const recipient = Array.isArray(mail.to) ? mail.to.join(', ') : mail.to;
     const body = wrapBase64(Buffer.from(mail.html, 'utf8').toString('base64'));
@@ -113,9 +109,7 @@ const buildMime = (mail) => {
     ].join('\r\n');
 };
 
-// Envío por la API de Gmail (HTTPS 443, compatible con Render Free).
-// Requiere el scope https://www.googleapis.com/auth/gmail.send autorizado por la
-// cuenta de EMAIL_FROM; el refresh token se obtiene en el OAuth Playground.
+
 const sendViaGmailApi = async (mail) => {
     if (!senderAddress()) {
         throw new Error('Falta EMAIL_FROM (o EMAIL_USER) como remitente de Gmail');
@@ -138,7 +132,7 @@ const sendViaGmailApi = async (mail) => {
     });
 
     if (!res.ok) {
-        // Un 401 suele ser token inválido en cache: se descarta para pedir otro en el próximo intento.
+
         if (res.status === 401) {
             gmailAccessToken = { value: null, expiresAt: 0 };
         }
@@ -148,9 +142,7 @@ const sendViaGmailApi = async (mail) => {
     }
 };
 
-// Envío por la API HTTPS de Brevo (compatible con Render Free, puerto 443).
-// Requiere en el dashboard de Brevo: remitente verificado y una API key con
-// permiso "Send transactional emails".
+
 const sendViaBrevo = async (mail) => {
     const recipient = Array.isArray(mail.to) ? mail.to[0] : mail.to;
     const res = await fetch('https://api.brevo.com/v3/smtp/email', {

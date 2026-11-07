@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const citaForm = document.getElementById('citaForm');
     const submitCitaBtn = document.getElementById('submit-cita-btn');
 
-    // Obtener perfil actualizado del usuario desde la base de datos
+
     async function loadUserProfile() {
         try {
             const response = await apiFetch(`/users/${userData.id}`);
