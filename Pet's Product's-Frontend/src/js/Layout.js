@@ -124,7 +124,7 @@ export function renderNavbar() {
                 <button class="nav-btn${activeClass('btn-acerca', activeId)}" id="btn-acerca">Acerca de</button>
                 <button class="nav-btn${activeClass('btn-register-recep', activeId)}" id="btn-register-recep" style="display: ${vis(isAdmin)};">Registrar recepcionista</button>
                 <button class="nav-btn${activeClass('btn-register-veter', activeId)}" id="btn-register-veter" style="display: ${vis(isAdmin)};">Registrar veterinario</button>
-                <button class="nav-btn${activeClass('btn-register-client', activeId)}" id="btn-register-client" style="display: ${vis(isAdmin || isVeterinario || isRecepcionista)};">Guardar registro</button>
+                <button class="nav-btn${activeClass('btn-register-client', activeId)}" id="btn-register-client" style="display: ${vis(isAdmin || isVeterinario)};">Guardar registro</button>
                 <button class="nav-icon-btn" id="btn-notifications" style="display: ${vis(showBell)};">
                     <img src="../assets/campana.png" alt="Notificaciones" class="nav-icon-img">
                     <span class="notification-badge" id="notification-badge">0</span>

@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!userData) return;
 
     renderLayout();
-    const { isAdmin, isVeterinario, isRecepcionista } = getRoleFlags(userData);
+    const { isAdmin, isVeterinario } = getRoleFlags(userData);
 
-    if (!isAdmin && !isVeterinario && !isRecepcionista) {
-        alert('Acceso exclusivo para administradores, veterinarios y recepcionistas. Redirigiendo...');
+    if (!isAdmin && !isVeterinario) {
+        alert('Acceso exclusivo para administradores y veterinarios. Redirigiendo...');
         window.location.href = './UserScreen.html';
         return;
     }
